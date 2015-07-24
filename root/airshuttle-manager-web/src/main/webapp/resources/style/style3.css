@@ -1,0 +1,44 @@
+@charset "utf-8";
+body,ul,form, li{margin:0px;padding:0px}
+textarea,input,select,body{font-size:12px}
+select,input{vertical-align:middle;padding:1px; }
+fieldset,img{border:0}
+
+a{color:#0449be;}
+
+a:hover{color:red;text-decoration:underline}
+
+
+
+.page{MARGIN-TOP: 5px; padding-bottom:10px;}
+.page span, .page a{height:15px;margin-left:10px; padding:3px 8px; display:inline-block;}
+.page span{font-weight:bold; border:1px #CCCCCC solid; background-color:#EEEEEE}
+.page a{color: #0066CC;  border:1px #CCCCCC solid; }
+.page a:hover{color: #FF0000; background-color:#EEEEEE; }
+
+.data_list{   
+    border: 1px solid #B1CDE3;  
+    padding:0;   
+    border-color: #95B8E7; 
+    border-collapse: collapse;  
+    margin-left: 5px;
+    margin-right: 5px;
+    
+}  
+          
+
+.data_list td {  
+    border: 1px solid #B1CDE3;  
+    background: #fff;  
+    
+    font-size:14px;  
+    padding: 3px 3px 3px 8px;  
+    color: #4f6b72;  
+}
+
+div {  
+    margin-top: 5px;
+    font-size:12px;
+    margin-left: 5px;
+}
+

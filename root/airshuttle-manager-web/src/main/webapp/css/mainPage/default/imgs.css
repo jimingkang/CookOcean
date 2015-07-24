@@ -1,0 +1,231 @@
+/* CSS Version Default */
+/* Version: 2.0  || Date: 2013-04-17 || Author: Cathy */
+/* Cascading Style Sheets Level 2 Revision 1 */
+@charset "utf-8";
+/*login*/
+.login{
+	background:#fff url(images/login_2_02.png) left 93px repeat-x;
+}
+.login .bg{
+	background:url(images/login_2.jpg) center 93px no-repeat;
+}
+.login .logo_1{
+	background:url(images/login_2-logo.png) left top no-repeat;
+}
+.login .logo_2{
+	background:url(images/login_2-logo_2.png) left top no-repeat;
+}
+.login .form_bg{
+	background:rgba(0,0,0,.2) url(images/login_2_03.png) left top no-repeat;
+	border-top:#e87a22 5px solid;
+	color:#fff;
+}
+.login h2{
+	color:#afdbff;
+	background-color:rgba(0,0,0,.1);
+}
+.login h3{
+	color:#d0d0d0;
+}
+.login h4{
+	color:#f0f0f0;
+}
+.login label, .gray_2 .lite, .gray_2 .deep{
+	color:#fff;
+}
+.login input[type="text"], .login input[type="password"]{
+	background-color:#fbfbfb;
+}
+.login input[type="checkbox"]{
+	color:#ff8a00;
+}
+.login button, .login input[type="button"]{
+	background:#a4e2ff;
+	color:#fff;
+	text-shadow:#084a81 0 1px 1px;
+}
+.login button:hover, .login input[type="button"]:hover{
+	background:#5daaea;
+	color:#eee;
+}
+
+/*login end*/
+
+/*header*/
+header, menu{
+	background-image: url(images/icon_n.png);
+	background-repeat: repeat-x;
+}
+header{
+	text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+	color:#fff;
+	border-bottom:#e87a22 3px solid;
+}
+header .logo{
+	background:url(images/n_top_logo.jpg) left top no-repeat;
+}
+header .logo2{
+	background:url(images/index-new-2_01.png) left top no-repeat;
+}
+
+header li:hover{
+	background-color:#5a8dbf;}
+/*header end*/
+
+/*menu*/
+header li, header li:hover, menu li:hover, menu li.selected, menu li:hover a, menu li.selected a, .sta, .list li, a.more, .table_01 .car, .table_01 .people, .table_01 .qiye, .arrow, .alert dl:hover dt, .alert dl.selected dt, .alert-list dt{
+	background-image: url(images/icon_n.png);
+	background-repeat:no-repeat;
+}
+menu li a{
+	color: #000;
+}
+menu li:hover a, menu li.selected a{
+	color: #fff;
+}
+/*menu end*/
+
+/*footer*/
+footer{
+	background-color: #c4c4c4;
+	color: #222;
+}
+footer a{
+	color: #103786;
+}
+footer a:hover{
+	color: #fff;
+}
+/*footer end*/
+
+a, .gray_01{
+	color:#595959;
+}
+a:hover{
+	color:#3598eb;
+}
+.panel{
+	box-shadow:0  0 5px  rgba(0, 0, 0, .4);
+}
+.panel h5, .panel h4{
+	text-shadow:1px 1px 1px rgba(0, 0, 0, .4);
+	color:#fff;
+}
+.panel .lite{
+	background-color:#40a6d0;
+}
+.panel .deep, .search [type="button"].deep{
+	background-color:#3778b5;
+}
+.list li{
+	border-bottom:#ccc 1px dashed;
+}
+.list a.area, .table_01 td b{
+	color:#2674b5;
+}
+.list .date{
+	color:#999;
+	font-size:11px;
+}
+.list a b{
+	color:#bf8c12;
+}
+a.more{
+	color:#9d8d61;
+}
+a.more:hover{
+	color:#ccc;
+}
+
+.table_01{
+	background-color:#e7e7e7;
+	border-left:#fff 1px solid;
+}
+.table_01 td{
+	border-right:#fff 1px solid;
+	border-bottom:#fff 1px solid;
+}
+.table_01 h6 span, .panel h1{
+	color:#f87330;
+}
+
+.gray_1{
+	background:#e3e3e3;
+}
+.gray_2{
+	background:#f1f1f1;
+}
+
+
+
+.search input[type="text"], .search input[type="button"]{
+	color:#fff;
+	text-shadow:1px 1px 2px rgba(0, 0, 0, .4);
+}
+.search button.lite, .search input[type="button"].lite{
+	background:#40a6d0;
+}
+.search button.deep, .search input[type="button"].deep{
+	background:#3778b5;
+}
+
+
+
+.alert dt{
+	background-color:#f2f1ec;
+	color:#a09984;
+}
+.alert dl:hover dt, .alert dl.selected dt{
+	background-color:#ebe9db;
+	color:#8a722b;
+}
+.alert dd{
+	background-color:#c2b58e;
+	color:#fff;
+}
+.alert dl:hover dd, .alert dl.selected dd{
+	background-color:#ed9231;
+}
+.alert dd.left{
+	border-right:#fff 1px solid;
+}
+
+
+
+.panel h5 .tabs_01 li{
+	text-shadow:none;
+}
+.panel h5 .tabs_01 li:hover, .panel h5 .tabs_01 li.selected{
+	background:#effcff;
+	border-bottom:#ffb400 2px solid;
+}
+.panel h5 .tabs_01 li a{
+	color:#fff;
+}
+.panel h5 .tabs_01 li:hover a, .panel h5 .tabs_01 li.selected a{
+	color:#40a6d0;
+}
+
+.alert-list li{
+	border-bottom:#d6d6d6 1px solid;
+	border-top:#fff 1px solid;
+	background-color:#f8f8f8;
+}
+.alert-list dt{
+	border-right:#d6d6d6 1px solid;
+	color:#515567;
+}
+.alert-list  dd h5{
+	color:#2aa3e1;
+	text-shadow:none;
+	padding:0;
+	line-height:normal;
+	height:auto;
+}
+.alert-list dd span{
+	color:#808080;
+}
+
+.gray_2 h1, gray_2 h1{
+	color:#3778b5;
+}

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>交换监控</title>
+    <link href="../../js/jquery-easyui-1.3.6/themes/default/easyui.css" rel="stylesheet" />
+    <link href="../../js/jquery-easyui-1.3.6/themes/icon.css" rel="stylesheet" />
+    <script src="../../js/jquery-1.11.1.js"></script>
+    <script src="../../js/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //初始化页面布局内容
+            var $mainBody = $('body');
+            $mainBody.layout();
+            $mainBody.height($mainBody.get(0).height - $mainBody.layout('panel', 'north').outerHeight() - $mainBody.layout('panel', 'south').outerHeight());
+            $mainBody.layout('resize');
+        });
+
+    </script>
+</head>
+<body>
+    <div data-options="region:'north',border:'false',height:'95'" style="background-color: #EAEAEA; overflow: hidden;">
+        <iframe src="top.html" height="95" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+    </div>
+    <!-- ../manager/index.html -->
+    <div data-options="region:'center',border:'false'" style="padding: 0; overflow: hidden;">
+        <iframe id="center" src="" height="100%" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" allowtransparency="yes"></iframe>
+    </div>
+    <div data-options="region:'south',border:'false',height:'30'" style="background-color: #eaeaea; text-align: center; vertical-align: middle; line-height: 25px;">
+        Copyright © <!--<img src="../images/coypright.png"  align="top">--> 2014-  国家交通运输物流公共信息平台
+    </div>
+</body>
+</html>

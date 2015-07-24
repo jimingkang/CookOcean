@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <!-- <link href="../css/index.css" rel="stylesheet" /> -->
+    <link href="../css/mainPage/formalize.css" rel="stylesheet">
+    <link href="../css/mainPage/pages.css" rel="stylesheet">
+    <link href="../css/mainPage/reset.css" rel="stylesheet">
+    <link href="../css/mainPage/default/imgs.css" rel="stylesheet">
+    <script src="../js/html5.js" type="text/jscript"></script>
+      <script src="../js/jquery-1.11.1.js"></script>
+    <script src="../js/jquery.tmpl.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+				$(".main-panel").width($(window).width()-240);
+				$(".mw1024").height($(window).height()-130);
+            var $tblAlterRow = $(".table_01 tbody tr:odd");
+            if ($tblAlterRow.length > 0)
+                $tblAlterRow.css("background","#f3f3f3");           
+        });
+            window.onresize = function(){ 
+				$(".main-panel").width($(window).width()-240);
+				$(".mw1024").height($(window).height()-130);
+            }  
+		
+		
+    </script>
+  
+    <script type="text/javascript">
+        $(function () {
+        	//禁止滚动条
+        	 $(document.body).css({
+			   "overflow-x":"hidden",
+			   "overflow-y":"hidden"
+			 });
+        
+            //iframe 宽度自适应
+            $('iframe').load(function () {
+                $(this).contents().find("body").wrap("<div style='width:100%;height:100%;'>");
+            });
+
+            //瀑布流浮动
+            
+            function getFirstData(){
+			    $.ajax({
+			    type: "POST",
+			    url:'../userstate/firstPageInfo.action',
+			    datatype: "json",
+			    contentType: "application/json",
+			    success: function(result){
+			     //alert(result);
+			     var d = eval("("+result+")");
+			     //alert(d.exchangeDataTotal);
+			     addData(d);
+			     return ;
+			    }
+			    });
+			}
+			//value.userCount
+			//value.overStockData
+			function addData(value){
+			 	 var exchangeTodayInfo = document.getElementById("exchangeTodayInfo");
+			 	 var exchangeTodayVal=value.exchangeDataToday;
+				 if(exchangeTodayVal.length>3){
+				 	exchangeTodayInfo.innerHTML=exchangeTodayVal.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+				 }else{
+				 	exchangeTodayInfo.innerHTML=exchangeTodayVal;
+				 }
+  				 
+  				 
+				 var exchangeInfo = document.getElementById("exchangeInfo");
+				 var exchangeInfoVal=value.exchangeDataTotal;
+				 if(exchangeInfoVal.length>3){
+				 	exchangeInfo.innerHTML=exchangeInfoVal.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+				 }else{
+				 	exchangeInfo.innerHTML=exchangeInfoVal;
+				 }
+  				 
+  				 var userInfo = document.getElementById("userInfo");
+  				 var ucValue=value.userCount.toString();
+				 if(ucValue.length>3){
+				 	userInfo.innerHTML=ucValue.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+				 }else{
+				 	userInfo.innerHTML=ucValue;
+				 }
+  				 var overStock = document.getElementById("overStock");
+  				 var overStorckValue=value.overStockData.toString();
+				 if(overStorckValue.length>3){
+				 	overStock.innerHTML=overStorckValue.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+				 }else{
+				 	overStock.innerHTML=overStorckValue;
+				 }
+  				 var todayRoute = document.getElementById("todayRoute");
+  				 var todayRouteValue=value.todayRoute;
+				 if(todayRouteValue.length>3){
+				 	todayRoute.innerHTML=todayRouteValue.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+				 }else{
+				 	todayRoute.innerHTML=todayRouteValue;
+				 }
+				 
+  				 var todayExceptionExchang = document.getElementById("todayExceptionExchang");
+  				 var todayExceptionExchangVal=value.todayExceptionExchang;
+				 if(todayExceptionExchangVal.length>3){
+				 	todayExceptionExchang.innerHTML=todayExceptionExchangVal.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+				 }else{
+				 	todayExceptionExchang.innerHTML=todayExceptionExchangVal;
+				 }
+  				 
+  				// sort(value.exchangeDataToday,value.exchangeDataTotal,value.userCount,value.overStockData);
+			}
+			
+			function sort(t,exchangeInfo,userInfo,o){
+				 var ps = [t,exchangeInfo,userInfo,o];
+				 ps.sort(function(a,b){return a-b});
+				 if(ps[3]==exchangeInfo){
+			 	 var ee=document.getElementById("pink");
+				 var wid="width:35%;";
+				 ee.setAttribute("style",wid); 
+				}
+				 if(ps[3]==t){
+			 	 var ee=document.getElementById("yellow");
+				 var wid="width:35%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[3]==userInfo){
+			 	 var ee=document.getElementById("green");
+				 var wid="width:35%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[3]==o){
+			 	 var ee=document.getElementById("red");
+				 var wid="width:35%;";
+				 ee.setAttribute("style",wid); 
+				}
+
+ 				if(ps[2]==exchangeInfo){
+			 	 var ee=document.getElementById("pink");
+				 var wid="width:30%;";
+				 ee.setAttribute("style",wid); 
+				}
+				 if(ps[2]==t){
+			 	 var ee=document.getElementById("yellow");
+				 var wid="width:30%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[2]==userInfo){
+			 	 var ee=document.getElementById("green");
+				 var wid="width:30%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[2]==o){
+			 	 var ee=document.getElementById("red");
+				 var wid="width:30%;";
+				 ee.setAttribute("style",wid); 
+				}	
+				
+				if(ps[1]==exchangeInfo){
+			 	 var ee=document.getElementById("pink");
+				 var wid="width:20%;";
+				 ee.setAttribute("style",wid); 
+				}
+				 if(ps[1]==t){
+			 	 var ee=document.getElementById("yellow");
+				 var wid="width:20%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[1]==userInfo){
+			 	 var ee=document.getElementById("green");
+				 var wid="width:20%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[1]==o){
+			 	 var ee=document.getElementById("red");
+				 var wid="width:20%;";
+				 ee.setAttribute("style",wid); 
+				}
+				
+				if(ps[0]==exchangeInfo){
+			 	 var ee=document.getElementById("pink");
+				 var wid="width:15%;";
+				 ee.setAttribute("style",wid); 
+				}
+				 if(ps[0]==t){
+			 	 var ee=document.getElementById("yellow");
+				 var wid="width:15%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[0]==userInfo){
+			 	 var ee=document.getElementById("green");
+				 var wid="width:15%;";
+				 ee.setAttribute("style",wid); 
+				}
+				if(ps[0]==o){
+			 	 var ee=document.getElementById("red");
+				 var wid="width:15%;";
+				 ee.setAttribute("style",wid); 
+				}	
+				
+			}
+				
+            getFirstData();
+            
+        });
+
+    </script>
+</head>
+<body>
+<div class="clearfix mw1024">
+  <div class="main-panel">
+  <div >
+  	<ul class="mb30 num clearfix" >
+    	<li id="green" class="green mem" style="width: 16.6%">
+        	<div>
+            	<h1 id="userInfo">0</h1>
+                <h6>用户量</h6>
+            </div>
+        </li>
+    	<li id="pink" class="pink ex" style="width: 16.6%">
+        	<div>
+            	<h1 id="exchangeInfo">0</h1>
+                <h6>累计交换量</h6>
+            </div>
+        </li>
+    	<li id="yellow" class="yellow exd" style="width: 16.6%">
+        	<div>
+            	<h1 id="exchangeTodayInfo">0</h1>
+                <h6>当日交换量</h6>
+            </div>
+        </li>
+    	<li id="red" class="red case" style="width: 16.6%">
+        	<div>
+            	<h1 id="overStock">0</h1>
+                <h6>积压量</h6>
+            </div>
+        </li>
+        <li id="lightgreen" class="lightgreen exd" style="width: 16.6%">
+        	<div>
+            	<h1 id="todayRoute">0</h1>
+                <h6>当日路由量</h6>
+            </div>
+        </li>
+        <li id="orange" class="orange ex" style="width: 16.6%">
+        	<div>
+            	<h1 id="todayExceptionExchang">0</h1>
+                <h6>当日异常交换量</h6>
+            </div>
+        </li>
+    </ul>
+    </div>
+  	<div class="clear"></div>
+    <div class="panel w49p fl">
+          <h5 class="deep">交换量</h5>
+          <div class="p8"> <iframe src="../view/userstate/exchDataForMain.jsp" width="100%" height="315px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+            </div>
+        </div>
+    <div class="panel w49p fr">
+          <h5 class="lite">活跃用户</h5>
+          <div class="p8"><iframe src="../view/userstate/activeUserDataForMain.jsp" width="100%" height="315px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+            </div>
+        </div>
+  </div>
+    </div>
+   		 
+</body>
+</html>

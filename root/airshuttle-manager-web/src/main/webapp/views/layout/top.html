@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录信息及主菜单页</title>
+    <link href="../../css/imgs.css" rel="stylesheet" />
+    <link href="../../css/pages.css" rel="stylesheet" />
+    <link href="../../css/reset.css" rel="stylesheet" />
+    <script src="../../js/jquery-1.11.1.js"></script>
+    <script src="../../js/jquery.tmpl.js"></script>
+    <script src="../../js/string.formart.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //绑定功能点击事件           
+            $(".logout").click(function(){
+            	window.parent.location.href='/user/loginOut';
+            });
+
+            $.getJSON("/manager/user/getSessionUserName", function (data) {	
+            	$("#user_info").text(data);
+            }).fail(function () {
+            	 $.messager.alert('异常', '请检查网络后重试。');
+            });
+            
+            //加载菜单数据
+            $.getJSON("/manager/resc/selectchildLevelResByUserId",
+            		{belong:0},
+            		function (data) {
+            	data = data.resultObject;
+	            //渲染菜单
+	            $("#navigationTemplate").tmpl(data).appendTo("#menu>ul");
+	
+	            //第一次加载默认选中首页
+	            $("#menu li:first").addClass("selected");
+	          	//默认加载第一个菜单
+	          	var firstUrl = data[0].uriCustomer == '1' ? data[0].uri : 
+	          		String.format("center.html?id={0}&name={1}", data[0].id,
+	          				escape(data[0].name.split('-')[data[0].name.split('-').length-1]));
+	            $(window.parent.document.body).find("#center").attr("src", firstUrl);
+	            //绑定菜单点击事件
+	            $("#menu li").click(function () {
+	                $("#menu li").removeClass("selected");
+	                $(this).addClass("selected");
+	                var url = $(this).attr("uriCustomer") == '1' ? $(this).attr("url") : String.format("center.html?id={0}&name={1}", $(this).attr("item_id"), escape($(this).text()));
+	                $(window.parent.document.body).find("#center").attr("src", url);
+	            });
+            }).fail(function () {
+            	 $.messager.alert('异常', '请检查网络后重试。');
+            });
+        });
+        
+    </script>
+</head>
+<body>
+    <div id="header" class="clearfix">
+        <div class="logo"></div>
+        <div class="fr">
+            <ul id="settings" class="op clearfix">
+                <li class="logout" title="注销登录">注销登录
+                </li>
+            </ul>
+        </div>
+        <div class="fr user">
+            <dl>
+                <dd>
+                   <b id="user_info"></b>，欢迎登录<b id="monitor_info">1号监控</b></dd>
+            </dl>
+        </div>
+    </div>
+    <div id="menu">
+        <ul class="clearfix">
+            <script id="navigationTemplate" type="text/x-jquery-tmpl">
+                <li item_id='${id}' url="${uri}" uriCustomer="${uriCustomer}"><a><span>${name.split('-')[name.split('-').length-1]}</span></a></li>
+            </script>
+        </ul>
+    </div>
+</body>
+</html>

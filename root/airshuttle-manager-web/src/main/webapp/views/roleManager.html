@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>角色管理</title>
+    <link href="../js/jquery-easyui-1.3.6/themes/default/easyui.css" rel="stylesheet" />
+    <link href="../js/jquery-easyui-1.3.6/themes/icon.css" rel="stylesheet" />
+    <script src="../js/jquery-1.11.1.js"></script>
+    <script src="../js/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
+    <script src="../js/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js"></script>
+    <script src="../js/string.formart.js"></script>
+    <script src="../js/grid-tool.js"></script>
+    <script type="text/javascript">
+        //保存（修改&新增）
+        function accept() {
+            //非编辑状态不做操作
+            if (editIndex == undefined) { return; }
+
+            //获取当前行原有数据
+             var $row = $('#dg').datagrid('getRows')[editIndex];
+
+           //获取角色名
+ 			var name = $('#dg').datagrid('getEditor', { index: editIndex, field: 'name' });
+ 			name = $(name.target).val();
+            if(name.length==0){
+            	$.messager.alert('异常', '角色名不能为空');
+				return;
+			}
+ 			var description =  $('#dg').datagrid('getEditor', { index: editIndex, field: 'description' });
+ 			description  = $(description .target).val();
+            
+ 			
+            //调用后台方法执行保存
+            $.post(String.format("/manager/role/{0}", $row.id ? "updateRole" : 'insertRole'), //原有数据无 ID 则为新增
+                {
+                    roleId: $row.id,
+                    rolename: name,
+                    description: description,
+                }, function (data) {
+                    if(data.result){
+                        $.messager.alert('错误', data.result);
+                        return;
+                    }
+
+                    $row['id'] = data.id;
+                    $row["modifyPerson"] = data.modifyPerson;
+                    if(data.modifyTime != undefined){
+                   	 $row["modifyTime"] = data.modifyTime;
+                   }
+                   
+					if(data.createPerson != undefined){
+						$row["createPerson"] = data.createPerson;
+                   }
+                   
+					if(data.createPerson != undefined){
+						$row["createTime"] = data.createTime;
+					}
+                    endEditing();
+                    $('#dg').datagrid('acceptChanges');
+                }).fail(function () {
+                    $.messager.alert('异常', '请检查网络后重试。');
+                });
+
+        }
+
+        //删除
+        function deleteit() {
+        	
+        	var $dg = $('#dg');
+        	var rows = $dg.datagrid('getChecked');
+	     	if (rows.length == 0) {
+	           	$.messager.alert('错误', '请选择要删除的角色。');
+	            return;
+	        }
+        	
+        	$.messager.confirm('确认','确定要删除选定数据吗？',function(r){
+    			if (r){
+    				var arrID = removeit('dg');
+    	            $.post("/manager/role/deleteRoleByRoleIds", $.param({ roleIds: arrID }, true),
+    	              function (data) {
+    	                  if(data.result){
+    	                      reject('dg');
+    	                      $.messager.alert('错误', data.result);
+    	                      return;
+    	                  }
+    	                  $('#dg').datagrid('acceptChanges');
+    	              }).fail(function () {
+    	                  reject('dg');
+    	                  $.messager.alert('异常', '信息删除失败，请检查网络后重试。');
+    	              });
+    			}
+    			
+        	});
+        	
+        }
+
+        //分配资源
+        function allocationRource() {
+            var row = $("#dg").datagrid('getSelected');
+            if (!row) { return; }
+            $.getJSON(String.format("/manager/resc/selectAllResNodeByRoleId?roleId={0}&belong=0", row.id),function(data){
+            	
+            	if (data.success == false) {
+                    $.messager.alert('错误', data.errorMessage);
+                    return;
+                }
+            	
+            	data = data.resultObject;
+            	
+                for(var i = 0 ; i < data.length ;i++)
+            	{
+                	data[i].children =eval(data[i].children);
+            	}
+               	$("#table_window").tree({"data":data});
+                $('#allocationWindow').window({ title: String.format("给 {0} 分配资源", row.name) });
+                $('#allocationWindow').window('move', { left: 300, top: 40 });
+                $('#allocationWindow').window('open');
+            }).fail(function () {
+                reject();
+                $.messager.alert('异常', '请检查网络后重试。');
+            });
+        }
+
+        //保存资源分配信息
+        function accept_window() {
+            var rows = $('#table_window').tree('getChecked', ['checked','indeterminate']);
+            var arrID = [];
+            for (var i = 0; i < rows.length; i++) {
+                arrID.push(rows[i].id);
+            }
+
+            var roleID = $("#dg").datagrid('getSelected').id;
+            $.post("/manager/role/insertRoleResc", $.param({roleId:roleID,rescIds:arrID}, true), function (data) {
+                if(data.result){
+                    $.messager.alert('错误', data.result);
+                    return;
+                }
+
+                $.messager.alert('成功', "资源分配已保存");
+            }).fail(function () {
+                reject('dg');
+                $.messager.alert('异常', '资源分配失败，请检查网络后重试。');
+            })
+
+        }
+function datetimeFormatter(dateStr){
+	if(dateStr == undefined || dateStr == ''){return '';}
+	var date= new Date(dateStr);
+	var y = date.getFullYear();
+	var m = date.getMonth()+1;
+	var d = date.getDate();
+	return String.format('{0}-{1}-{2} {3}:{4}:{5}',date.getFullYear(),date.getMonth()+1,date.getDate(),date.getHours(),date.getMinutes(),date.getSeconds());
+}
+
+    </script>
+</head>
+<body>
+    <table id="dg" class="easyui-datagrid"
+        data-options="
+                rownumbers: true,
+                fit:true,
+                iconCls: 'icon-edit',
+                toolbar: '#tb',
+                idField:'id',   
+                checkOnSelect:false,
+                selectOnCheck:false,
+                singleSelect:true,
+                url: '/manager/role/queryRoleList',
+                method: 'get',
+                pagination:true,
+                pageSize:10,
+                onDblClickRow: onClickRow
+        ">
+        <thead>
+            <tr>
+                <th data-options="field:'ck',checkbox:true"></th>
+                <th editor="{type:'validatebox',options:{required:true}}"  data-options="field:'name',width:120">角色名</th>
+                <th data-options="field:'description',width:140,editor:'text'">描述</th>
+                <th data-options="field:'modifyPerson',width:120">修改人</th>
+                <th data-options="field:'modifyTime',width:230,align:'center',formatter:datetimeFormatter">修改时间</th>
+                <th data-options="field:'createPerson',width:120">创建人</th>
+                <th data-options="field:'createTime',align:'center',width:230,formatter:datetimeFormatter">创建时间</th>
+            </tr>
+        </thead>
+    </table>
+
+    <div id="tb" style="height: auto">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" onclick="append('dg', {name:'',description:''})">新增</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true" onclick="deleteit('dg')">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept('dg')">保存</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-undo',plain:true" onclick="reject('dg')">取消</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-application-side-tree',plain:true" onclick="allocationRource()">分配资源</a>
+    </div>
+
+    <div id="allocationWindow" class="easyui-window" data-options="modal:true,closed:true,minimizable:false,maximizable:false,collapsible:false,iconCls:'icon-application-side-tree'" style="width: 240px; height: 400px; padding: 10px;">
+	<div id="tb_window" style="height: auto">
+            <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true" onclick="accept_window()">保存</a>
+        </div>
+          <ul id="table_window"  class="easyui-tree" 
+          data-options="animate:true,checkbox:true,toolbar:'#tb_window'"></ul>
+        
+    </div>
+</body>
+</html>

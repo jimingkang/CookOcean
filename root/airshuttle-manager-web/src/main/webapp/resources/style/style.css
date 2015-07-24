@@ -1,0 +1,99 @@
+@charset "utf-8";
+/* CSS Document */
+
+html {font-size:100.01%;}
+body {margin:0; padding:0;font-size:75%;color:#222;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+a:focus, a:hover {color:#000;text-decoration:underline;}
+a { color:#06C; text-decoration:none;}
+
+.header{ height:74px; min-width:960px; background:url(../images/bg.jpg) left top no-repeat; clear:both; background-color:#185cbf;}
+h1{ font-size:16px; width:200px; color:#FFF; padding:20px 0 0 20px; float:left;}
+#navi{ float:left;}
+#navi ul{ margin:43px 0 0 0; padding:0; list-style-type:none;}
+#navi ul li{ float:left; text-align:center; margin:0 2px;}
+#navi ul li a{ display:block; background:url(../images/button_1.png) bottom center no-repeat; width:94px; height:25px; color:#FFF; text-decoration:none; font-weight:bold; padding:6px 0 0 0;}
+#navi ul li a.naviLong{ display:block; background:url(../images/button_2.png) bottom center no-repeat; width:180px; height:25px; padding:6px 0 0 0; }
+#navi ul li a.naviOnLong{ display:block; background:url(../images/button_2_2.png) bottom center no-repeat; width:180px; height:25px; padding:6px 0 0 0; color:#06C;}
+#navi ul li a.naviOn{ background:url(../images/button_1_1.png) bottom center no-repeat; color:#06C;}
+
+#navi2{ float:right; height: 74px; min-width: *%px; }
+#navi2 h4{ margin:0 0 0 0; padding:0; list-style-type:none;}
+#navi2 ul{ margin:23px 0 0 0; padding:0; list-style-type:none; }
+#navi2 ul li{ float:right; text-align:center; margin:0 10px;}
+
+#container{ margin:0; width:100%;}
+
+/* menu in leftbar */
+div.sidebar {
+	margin:10px;
+	width: 200px;
+	float:left;
+}
+div.sidebar div {
+	overflow: hidden;
+}
+div.sidebar div:first-child {}
+div.sidebar span.nochildBtn{
+	display: block;
+	margin:0 0;
+	padding: 12px 0 5px 15px;
+	background: url(../images/button_bg_1.jpg) no-repeat left;	
+	}
+div.sidebar span a{
+	padding: 12px 0 12px 15px;
+	margin:5px 0;
+	display: block;
+	color: #333;
+	font-weight: bold;
+	text-decoration: none;
+	background: url(../images/button_bg_1.jpg) no-repeat left;
+}
+div.sidebar span a.current{
+	display: block;
+	margin:5px 0;
+	padding: 12px 0 12px 15px;
+	color: white;
+	text-decoration: none;
+	background: url(../images/button_bg.jpg) no-repeat left;
+}
+
+div.sidebar div.collapsed {
+	height: 46px;
+}
+div.sidebar div span {
+	display: block;
+	margin:5px 0;
+	padding: 12px 0 12px 25px;
+	font-weight: bold;
+	color: white;
+	background: url(../images/button_bg.jpg) no-repeat left;
+	cursor: pointer;
+}
+div.sidebar div.collapsed span {
+	background: url(../images/button_bg_1.jpg) no-repeat left;;
+	color:#333;
+	padding: 12px 0 12px 25px;	
+}
+div.sidebar div a {
+	padding: 5px 10px;
+	display: block;
+	color: #333;
+	text-decoration: none;	
+	background:  #DCE2F8;
+}
+div.sidebar div a.current {
+	background : #6789d3;color: white;
+}
+div.sidebar div a:hover {
+	background-color:#6789d3; color:#FFF;
+}
+
+#content{ margin-left:225px !important; margin-left:222px; min-width:700px;}
+.contentHeader{ clear:both; margin-bottom:10px;}
+.path{ float:left; padding:15px 0 0 10px; }
+.toolBar{ float:right;}
+.clear{ clear:both;}
+
+#footer{ float: left; width: 100%;}
+
+#contentframe{ padding:0 10px; }

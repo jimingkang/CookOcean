@@ -1,0 +1,67 @@
+* { 
+    margin:0; 
+    padding:0; 
+} 
+.index_item {
+	
+    width: 100%; 
+    height :50%;
+    margin:0 auto; 
+}
+.ctinfo{
+    /*background:#666;*/
+   
+    
+}
+#data{
+      float:left;
+       width:50%;
+}
+#data1{
+     float:right;
+      width:50%;
+}
+#clearfloat { 
+    clear:both; 
+    height:1px; 
+    overflow:hidden; 
+    margin-top:-1px; 
+}
+    .index_item div {
+        margin: 0px;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+        .index_item div b, .index_item div p {
+            margin: 0;
+            padding: 5px;
+        }
+       
+
+        .index_item div b {
+            color: #fff;
+            background-color: #54AED6;
+            font-size: 14px;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            display:block;
+        }
+/* CSS Document */
+body{font:20px Î¢ÈíÑÅºÚ;}
+.type{width:100%;border:2px solid #CCC;
+	}
+.type dl{height:70px;line-height:70px;padding-left:25%;padding-top:1%;}
+.type dt{float:left}
+.type dd{float:left;margin-left:1%;margin-right:5%; font-size:40px;font-weight:bold;font-family:PrivateFont}
+@font-face {
+   font-family:'PrivateFont';
+   src:url('../fonts/digit-webfont.eot');
+   src:url('../fonts/digit-webfont.eot?#iefix')format('embedded-opentype'),
+        url('../fonts/digit-webfont.woff')format('woff'),
+    url('../fonts/digit-webfont.ttf')format('truetype'),
+    url('../fonts/digit-webfont.svg#PrivateFont')format('svg');
+   font-weight:normal;
+   font-style:normal;
+}

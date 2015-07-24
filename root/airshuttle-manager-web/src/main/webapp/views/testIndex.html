@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="../css/index.css" rel="stylesheet" />
+    <script src="../js/jquery-1.11.1.js"></script>
+    <script src="../js/jquery.tmpl.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //iframe 宽度自适应
+            $('iframe').load(function () {
+                $(this).contents().find("body").wrap("<div style='width:100%;'>");
+            });
+
+            //瀑布流浮动
+            $("body>.index_item:odd").css("float", "left");
+            $("body>.index_item:even").css("float", "right");
+        });
+
+    </script>
+</head>
+<body>
+    <div class="index_item">
+        <div>
+            <b>这里是标题</b>
+            <p>这里是内容</p>
+        </div>
+    </div>
+    <div class="index_item">
+        <div>
+            <b>在线用户实时统计1</b>
+            <p>
+                <iframe src="" width="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

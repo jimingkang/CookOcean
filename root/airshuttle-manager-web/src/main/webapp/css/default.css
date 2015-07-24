@@ -1,0 +1,10 @@
+/* CSS Document */
+
+/* Default */
+body { text-align:center; color:#000; font-size:12px; font-weight:normal; font-family:"ËÎÌו", Arial, Verdana, Helvetica, sans-serif; }
+* { margin:0; padding:0; text-align:left; }
+ul, ol, li, dl, dt, dd { list-style:none; }
+img, table { border:0; }
+table { width:100%; }
+a { color:#92535e; }
+a:hover { color:#900; text-decoration:none; }

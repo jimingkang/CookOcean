@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.topshare.airshuttle.root</groupId>
+	<artifactId>parent</artifactId>
+	<packaging>pom</packaging>
+	<name>airshuttle-parent</name>
+	<version>1.0-SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<paoding.rose.context.version>1.0-SNAPSHOT</paoding.rose.context.version>
+		<paoding.rose.pipe.version>1.0-SNAPSHOT</paoding.rose.pipe.version>
+		<paoding.rose.jade.version>1.0-SNAPSHOT</paoding.rose.jade.version>
+		<paoding.rose.version>1.0-SNAPSHOT</paoding.rose.version>
+		<airshuttle.web.version>1.0-SNAPSHOT</airshuttle.web.version>
+		<samplePaodingRose.version>1.0-SNAPSHOT</samplePaodingRose.version>
+		<airshuttle-services.version>1.0-SNAPSHOT</airshuttle-services.version>
+		<airshuttle.manager.web.version>1.0-SNAPSHOT</airshuttle.manager.web.version>
+		<commons-util.version>1.0-SNAPSHOT</commons-util.version>
+		<junit.version>4.7</junit.version>
+		<javax.servlet.api.version>3.0.1</javax.servlet.api.version>
+		<commons.logging.version>1.1.1</commons.logging.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+		<javax.mail.version>1.4</javax.mail.version>
+		<spring.version>4.1.4.RELEASE</spring.version>
+		<log4j.version>1.2.17</log4j.version>
+		<jsp-api.version>2.0</jsp-api.version>
+		<jackson-mapper-asl.version>1.9.3</jackson-mapper-asl.version>
+		<jackson-core-asl.version>1.9.3</jackson-core-asl.version>
+		<commons.lang.version>2.6</commons.lang.version>
+		<com.google.code.gson.version>1.7.1</com.google.code.gson.version>
+		<commons.io.version>2.1</commons.io.version>
+		<commons.fileupload.version>1.2.1</commons.fileupload.version>
+		<spring-mock.version>2.0.8</spring-mock.version>
+		<velocity.version>1.7</velocity.version>
+		<velocity-tools.version>2.0</velocity-tools.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+		<mysql.connector.java.version>5.1.10</mysql.connector.java.version>
+		<commons.jexl.version>1.1</commons.jexl.version>
+		<commons.dbcp.version>1.2.2</commons.dbcp.version>
+		<hsqldb.version>2.2.8</hsqldb.version>
+		<jsp-api.version>2.0</jsp-api.version>
+		<json-rpc.version>1.0</json-rpc.version>
+		<java.version>1.7</java.version>
+	</properties>
+
+	<dependencyManagement>
+	</dependencyManagement>
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<resources>
+			<resource>
+				<!-- 默认即：src/main/java -->
+				<directory>${project.build.sourceDirectory}</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.java</include>
+				</includes>
+				<excludes>
+					<exclude>log4j.*</exclude>
+					<exclude>logback.*</exclude>
+					<exclude>**/.svn/**</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.java</include>
+				</includes>
+				<excludes>
+					<exclude>log4j.*</exclude>
+					<exclude>logback.*</exclude>
+					<exclude>**/.svn/**</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<!-- 默认即：src/test/java -->
+				<directory>${project.build.testSourceDirectory}</directory>
+				<includes>
+					<include>**/*.java</include>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+				</includes>
+				<excludes>
+					<exclude>**/.svn/**</exclude>
+				</excludes>
+			</testResource>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.java</include>
+				</includes>
+				<excludes>
+					<exclude>**/.svn/**</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
+		<plugins>
+			
+			<!-- 资源编码UTF-8 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<verbose>true</verbose>
+					<encoding>UTF-8</encoding>
+					<compilerArguments>
+						<sourcepath>${project.basedir}/src/main/java</sourcepath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.16</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<fork>true</fork>
+					<verbose>true</verbose>
+					<encoding>UTF-8</encoding>
+					<compilerArguments>
+						<sourcepath>${project.build.sourceDirectory}</sourcepath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			<!-- package的时候，单独打出source包出来，deploy的时候能够一同提交到库中 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<configuration>
+					<include>${project.build.sourceDirectory}</include>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>${skipTests}</skip>
+					<testFailureIgnore>${testFailureIgnore}</testFailureIgnore>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>releases Repository</name>
+			<url>http://121.40.91.193:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots Repository</name>
+			<url>http://121.40.91.193:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>
+
+
+
+
+
+
+
+
+

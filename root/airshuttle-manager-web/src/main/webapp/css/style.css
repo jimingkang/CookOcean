@@ -1,0 +1,106 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+	color: #333;
+    font-family: Arial;
+    padding: 20px;
+}
+
+.title, .form-data .title
+{
+    
+    font-weight: bold;
+}
+
+    .title span
+    {
+        font-size: 64px;
+    }
+
+
+ul .title
+{
+    font-size: 32px;
+}
+
+.ul-totlal
+{
+    text-align: center;
+}
+
+.ul-totlal, .ul-title, .form-data ul
+{
+    list-style: none;
+}
+
+    .ul-totlal li
+    {
+        width: 24%;
+        display: inline-block;
+    }
+
+    .ul-title .title
+    {
+       font-size: 28px;
+    }
+
+    .ul-title li
+    {
+    	text-align:center;
+        font-size: 15px;
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+        .ul-title li div
+        {
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+.form-data
+{
+    margin-top: 5px;
+    border: 2px solid #bccbdb;
+}
+
+    .form-data .row
+    {
+        clear: both;
+    }
+
+        .form-data .row div
+        {
+            float: left;
+            width: 13%;
+            text-align: center;
+            border-right: 1px solid #e8e4e4;
+            padding: 5px;
+        }
+
+            .form-data .row div:last-child
+            {
+                border: none;
+            }
+
+.text-center
+{
+    text-align: center;
+}
+
+.border-bottom
+{
+    border-bottom: 2px solid #e8e4e4;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.clear
+{
+    clear: both;
+}

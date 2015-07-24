@@ -1,0 +1,644 @@
+/* CSS Version Default */
+/* Version: 2.0  || Date: 2013-04-17 || Author: Cathy */
+/* Cascading Style Sheets Level 2 Revision 1 */
+
+body {
+    font: 12px/1.5 'Helvetica Neue', 'Microsoft YaHei', Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+
+pre,
+code {
+    font-family: 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+}
+
+hr {
+    border: 0 #ccc solid;
+    border-top-width: 1px;
+    clear: both;
+    height: 0;
+}
+
+/* `Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+    font-size: 26px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+h4 {
+    font-size: 15px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
+h6 {
+    font-size: 11px;
+}
+
+/* `Spacing
+----------------------------------------------------------------------------------------------------*/
+
+ol {
+    list-style: decimal;
+}
+
+ul, li {
+    list-style: none;
+}
+
+li {
+    margin: 0;
+}
+
+/*p,
+dl,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+ul,
+pre,
+table,
+address,
+fieldset,
+figure {
+  margin-bottom: 20px;
+}
+
+*/
+
+
+/* `XHTML, HTML4, HTML5 Reset
+----------------------------------------------------------------------------------------------------*/
+
+/*a,*/
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+/*b,*/
+big,
+blockquote,
+body,
+canvas,
+caption,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+dialog,
+div,
+dl,
+dt,
+/*em,*/
+embed,
+/* fieldset, */
+figcaption,
+figure,
+/*font,*/
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+hr,
+html,
+/*i,*/
+iframe,
+img,
+ins,
+kbd,
+/*label,*/
+legend,
+li,
+mark,
+menu,
+meter,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+progress,
+q,
+rp,
+rt,
+ruby,
+s,
+samp,
+section,
+small,
+/*span,*/
+strike,
+/*strong,*/
+sub,
+summary,
+sup,
+/*table,
+tbody,
+td,
+tfoot,
+th,
+tr,
+thead,*/
+time,
+tt,
+u,
+ul,
+var,
+video,
+xmp {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    /*
+  Override the default (display: inline) for
+  browsers that do not recognize HTML5 tags.
+
+  IE8 (and lower) requires a shiv:
+  http://ejohn.org/blog/html5-shiv
+*/
+    display: block;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+
+b,
+strong {
+    /*
+  Makes browsers agree.
+  IE + Opera = font-weight: bold.
+  Gecko + WebKit = font-weight: bolder.
+*/
+    font-weight: bold;
+}
+
+img {
+    color: transparent;
+    font-size: 0;
+    vertical-align: middle;
+    /*
+  For IE.
+  http://css-tricks.com/ie-fix-bicubic-scaling-for-images
+*/
+    -ms-interpolation-mode: bicubic;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+li {
+    /*
+  For IE6 + IE7:
+
+  "display: list-item" keeps bullets from
+  disappearing if hasLayout is triggered.
+*/
+    cursor: pointer;
+    display: list-item;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,
+td,
+caption {
+    font-weight: normal;
+    text-align: left;
+}
+
+q {
+    quotes: none;
+}
+
+    q:before,
+    q:after {
+        content: '';
+        content: none;
+    }
+
+sub,
+sup,
+small {
+    font-size: 75%;
+}
+
+sub,
+sup {
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+svg {
+    /*
+  For IE9. Without, occasionally draws shapes
+  outside the boundaries of <svg> rectangle.
+*/
+    overflow: hidden;
+}
+
+
+
+
+/* http://sonspring.com/journal/clearing-floats */
+
+.clear {
+    clear: both;
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+}
+
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
+
+.clearfix:before,
+.clearfix:after {
+    content: '.';
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    font-size: 0;
+    line-height: 0;
+    width: 0;
+    height: 0;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+  The following zoom:1 rule is specifically for IE6 + IE7.
+  Move to separate stylesheet if invalid CSS is a problem.
+*/
+
+.clearfix {
+    zoom: 1;
+}
+
+.wrapfix::after {
+    height: 0px;
+    clear: both;
+    display: block;
+    visibility: hidden;
+    content: ".";
+}
+
+.wrapfix {
+    display: inline-table;
+}
+
+* html .wrapfix {
+    height: 0%;
+}
+
+.wrapfix {
+    display: block;
+}
+
+
+
+
+
+/*position*/
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.t_l {
+    text-align: left;
+}
+
+.t_r {
+    text-align: right;
+}
+
+.t_c {
+    text-align: center;
+}
+
+.p_r {
+    position: relative;
+}
+
+.t_c {
+    text-align: center;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.m10 {
+    margin: 10px;
+}
+
+.m8 {
+    margin: 8px;
+}
+
+.ml5 {
+    magrin-left: 5px;
+}
+
+.mlr10 {
+    margin: 0 10px;
+}
+
+.m6 {
+    margin: 6px;
+}
+
+.mlr5 {
+    margin: 0 5px;
+}
+
+.mr8 {
+    margin-right: 8px;
+}
+
+.p10 {
+    padding: 10px;
+}
+
+.p8 {
+    padding: 8px;
+}
+
+.p15 {
+    padding: 15px;
+}
+
+.p5 {
+    padding: 5px;
+}
+
+.pr3 {
+    padding-right: 3px;
+}
+
+.pr10 {
+    padding-right: 10px;
+}
+
+.plr8 {
+    padding: 0 8px;
+}
+
+.pl8 {
+    padding-left: 8px;
+}
+
+.pt5 {
+    padding-top: 5px;
+}
+
+.pt10 {
+    padding-top: 10px;
+}
+
+.pt45 {
+    padding-top: 45px;
+}
+
+a {
+    text-decoration: none;
+    color: #605f5f;
+}
+
+    a:hover {
+        color: #0a438d;
+    }
+
+.d_il {
+    display: inline;
+}
+
+.nwarp {
+    white-space: nowrap;
+}
+
+.wrap {
+    table-layout: fixed;
+    word-break: break-all;
+    verflow: hidden;
+}
+
+.bor {
+    border: #c7c7c7 1px solid;
+}
+
+.w1280 {
+    width: 1280px;
+    margin: auto;
+}
+
+.w1024 {
+    width: 1002px;
+    margin: auto;
+}
+
+.mw1024 {
+    min-width: 990px;
+}
+
+.w490 {
+    width: 490px;
+}
+
+.w120 {
+    width: 120px;
+}
+
+.w200 {
+    width: 200px;
+}
+
+.w10 {
+    width: 10px;
+}
+
+.w78 {
+    width: 78px;
+}
+
+.w72 {
+    width: 72px;
+}
+
+.w55 {
+    width: 55px;
+}
+
+.w90 {
+    width: 90px;
+}
+
+.w105 {
+    width: 105px;
+}
+
+.w104 {
+    width: 108px;
+}
+
+.w103 {
+    width: 103px;
+}
+
+.w220 {
+    width: 220px;
+}
+
+.w278 {
+    width: 278px;
+}
+
+.w280 {
+    width: 280px;
+}
+
+.wmm {
+    min-width: 370px;
+    width: 50%;
+}
+
+.w15p {
+    width: 15%;
+}
+
+.w18p {
+    width: 18%;
+}
+
+.w28p {
+    width: 28%;
+}
+
+.w30p {
+    width: 25%;
+}
+
+.w31p {
+    width: 31%;
+}
+
+.w38p {
+    width: 38%;
+}
+
+.w45p {
+    width: 45%;
+}
+
+.w47p {
+    width: 47%;
+}
+
+.w49p {
+    width: 49%;
+}
+
+.w50p {
+    width: 50%;
+}
+
+.w55p {
+    width: 55%;
+}
+
+.w65p {
+    width: 65%;
+}
+
+.w70p {
+    width: 70%;
+}
+
+.w81p {
+    width: 81.5%;
+}
+
+.w99p {
+    width: 99%;
+}
+
+.w100p {
+    width: 100%;
+}
+
+.mw70p {
+    min-width: 670px;
+    width: 70%;
+}
+
+.d_block {
+    display: block;
+}
+
+.h150 {
+    height: 155px;
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
