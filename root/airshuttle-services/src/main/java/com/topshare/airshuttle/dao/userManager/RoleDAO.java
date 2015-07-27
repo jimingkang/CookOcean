@@ -30,6 +30,10 @@ public interface RoleDAO {
 	@SQL("select count(ID) from t_airshuttle_role where #if(:u.name != null){ name = :u.name } #if(:u.id != null){and id != :u.id }")
 	public Integer vertifyExistsRoleName(@SQLParam("u") TAirshuttleRole role);
 	
+	@SQL("select ID, DESCRIPTION, NAME, CREATE_PERSON, CREATE_TIME, MODIFY_PERSON, MODIFY_TIME "
+			+ " from t_airshuttle_role where id = :id ")
+	public TAirshuttleRole getRoleById(@SQLParam("id") Integer id);
+	
 	@SQL("update t_airshuttle_role set MODIFY_PERSON = :u.modifyPerson "
 			+ " #if(:u.name != null){,name=:u.name}"
 			+ " #if(:u.description != null){,description=:u.description}"

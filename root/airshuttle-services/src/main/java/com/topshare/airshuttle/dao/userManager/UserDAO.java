@@ -13,10 +13,16 @@ import com.topshare.airshuttle.model.userManager.TAirshuttleUser;
 @DAO
 public interface UserDAO {
 
+	@SQL("select count(id) from t_airshuttle_user where email = :email")
+	public int judgeEmailIsExists(@SQLParam("email") String email);
+	
+	@SQL("select count(id) from t_airshuttle_user where username = :username")
+	public int judgeUserNameIsExists(@SQLParam("username") String username);
+	
 	@SQL("select ID, USERNAME, PASSWORD,SEX, ENABLED, CREATE_PERSON,"
 			+ "CREATE_TIME, MODIFY_PERSON, MODIFY_TIME,DESCRIPTION, EMAIL, photot_url,"
 			+ "desc_myself, lable, telephone,customer_picUrl "
-			+ "from t_airshuttle_user where username = :u.username and password = :u.password limit 1")
+			+ "from t_airshuttle_user where (username = :u.username || email = :u.username) and password = :u.password limit 1")
 	public TAirshuttleUser getUserByLogin(@SQLParam("u") TAirshuttleUser user);
 	
 	@SQL("select ID, USERNAME, PASSWORD,SEX, ENABLED, CREATE_PERSON,"
@@ -49,7 +55,7 @@ public interface UserDAO {
 			+ " #if(:c.telephone != null){,telephone=:c.telephone}"
 			+ " #if(:c.customerPicurl != null){,customer_picUrl=:c.customerPicurl}"
 			+ " where   id = :c.id ")
-	public void updateByParam(@SQLParam("c") TAirshuttleUser user);
+	public void updateParamById(@SQLParam("c") TAirshuttleUser user);
 	
 	/***
 	 * 校验用户名是否存在
@@ -59,10 +65,8 @@ public interface UserDAO {
 	@SQL("select count(ID) from T_AIRSHUTTLE_USER where  USERNAME = :u.username #if(:u.id != null){and id !=:u.id}")
 	public Integer vertifyExistsUserName(@SQLParam("u") TAirshuttleUser user); 
 	
-	
 	@SQL("select count(ID) from T_AIRSHUTTLE_USER #if(:u.username != null){where username like :u.username }")
 	public Integer getCountByParam(@SQLParam("u") TAirshuttleUser user);
-	
 	
 	@SQL("select ID, USERNAME, PASSWORD,SEX, ENABLED, CREATE_PERSON,"
 			+ "CREATE_TIME, MODIFY_PERSON, MODIFY_TIME,DESCRIPTION, EMAIL, photot_url,"
