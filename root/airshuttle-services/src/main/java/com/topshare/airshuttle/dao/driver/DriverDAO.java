@@ -64,6 +64,23 @@ public interface DriverDAO {
 			+ " status, status_msg statusMsg from t_airshuttle_driver "
 			+ " where  id = :id ")
 	public TAirshuttleDriver getById( @SQLParam("id") Integer id);
+	
+	
+	/***
+	 * 通过createPerson查询
+	 * 司机和用户之间的关系
+	 * 1、注册普通用户
+	 * 2、普通用户司机认证
+	 * 3、通过普通用户查询是否是司机：创建人 CREATE_PERSON
+	 * @param id
+	 * @return
+	 */
+	@SQL("select id, CREATE_PERSON, CREATE_TIME, MODIFY_PERSON modifyPerson, MODIFY_TIME modifyTime, DESCRIPTION, realName,"
+			+ " idCard, telephone, driving_license_url drivingLicenseUrl , "
+			+ " security_money securityMoney, official_photot_url officialPhototUrl, "
+			+ " status, status_msg statusMsg from t_airshuttle_driver "
+			+ " where  CREATE_PERSON = :createPerson ")
+	public List<TAirshuttleDriver> getByCreatePerson( @SQLParam("createPerson") Integer createPerson);
 
 
 	@SQL("select id, CREATE_PERSON, CREATE_TIME, MODIFY_PERSON modifyPerson, MODIFY_TIME modifyTime, DESCRIPTION, realName,"
@@ -71,7 +88,6 @@ public interface DriverDAO {
 			+ " security_money securityMoney, official_photot_url officialPhototUrl, "
 			+ " status, status_msg statusMsg,city  from t_airshuttle_driver "
 			+ " where #if(:d.city != null){  city LIKE :d.city } "
-			
 			+ " limit :pageNumber,:pageSize")
 	public List<TAirshuttleDriver> getByParamCity(@SQLParam("d") TAirshuttleDriver tAirshuttleDriver,@SQLParam("pageNumber") int pageNumber,@SQLParam("pageSize")  int pageSize);
 }

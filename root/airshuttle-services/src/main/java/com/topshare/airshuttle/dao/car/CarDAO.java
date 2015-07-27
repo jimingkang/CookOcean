@@ -54,4 +54,9 @@ public interface CarDAO {
 			+ " car_picture_url, status, status_msg from t_airshuttle_car"
 			+ " where   id = :id ")
 	public TAirshuttleCar getById( @SQLParam("id") Integer id);
+	
+	
+	@SQL("SELECT c.* FROM t_airshuttle_driver_car dc INNER JOIN t_airshuttle_car c "
+			+ " ON dc.car_id = c.id WHERE dc.driver_id= :driverId")
+	public List<TAirshuttleCar> getByDriverId( @SQLParam("driverId") Integer driverId);
 }

@@ -2,44 +2,34 @@ package com.topshare.airshuttle.service.driver;
 
 import java.util.List;
 
-import net.paoding.rose.jade.annotation.SQLParam;
+import javax.sql.DataSource;
+
+import net.paoding.rose.jade.context.application.JadeFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.topshare.airshuttle.common.util.Page;
+import com.topshare.airshuttle.dao.car.CarDAO;
 import com.topshare.airshuttle.dao.driver.DriverCarDAO;
 import com.topshare.airshuttle.dao.driver.DriverDAO;
+import com.topshare.airshuttle.model.car.TAirshuttleCar;
 import com.topshare.airshuttle.model.driver.TAirshuttleDriver;
 import com.topshare.airshuttle.model.driver.TAirshuttleDriverCar;
-import com.topshare.airshuttle.model.userBookDriver.TAirshuttleUserBookDriver;
+import com.topshare.airshuttle.service.BaseTransService;
 
 @Service
-public class DriverService {
+public class DriverService extends BaseTransService{
 	
 	@Autowired
 	private DriverDAO driverDAO;
 	
 	@Autowired
 	private DriverCarDAO driverCarDAO;
-	
-	/***
-	 * 保存
-	 * @param tAirshuttleDriver
-	 */
-	public Integer insert(TAirshuttleDriver tAirshuttleDriver){
-		
-		return this.driverDAO.insert(tAirshuttleDriver);
-	}
-	
-	/***
-	 * 更新，删除也是改变status属性
-	 * @param tAirshuttleDriver
-	 */
-	public void updateByParam(TAirshuttleDriver tAirshuttleDriver){
-		
-		this.driverDAO.updateByParam(tAirshuttleDriver);
-	}
 	
 	/***
 	 * 分页查询
@@ -64,6 +54,8 @@ public class DriverService {
     	
     	return new Page<TAirshuttleDriver>(list, totalCount, pageSize, pageNumber);
 	}
+	
+	
 	public Page<TAirshuttleDriver> getPageBycity(TAirshuttleDriver tAirshuttleDriver, int pageNumber, int pageSize){
 		
 		Integer totalCount = this.driverDAO.getCountByCity(tAirshuttleDriver);
@@ -81,23 +73,64 @@ public class DriverService {
     	return new Page<TAirshuttleDriver>(list, totalCount, pageSize, pageNumber);
 	}
 	
-	/***
-	 * 查询一条记录
-	 * @param id
-	 * @return
-	 */
-	public TAirshuttleDriver getById( @SQLParam("id") Integer id){
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void modifyDriverMsg(final TAirshuttleDriver driver){
 		
-		return this.driverDAO.getById(id);
+		final DataSource dataSource = this.getDataSource();
+		DataSourceTransactionManager dstm = new DataSourceTransactionManager();
+		dstm.setDataSource(dataSource);
+		TransactionTemplate tt = new TransactionTemplate(dstm);
+		tt.execute(new TransactionCallback() {
+			public Object doInTransaction(TransactionStatus status) {
+				
+				JadeFactory factory = new JadeFactory(dataSource);
+				DriverDAO driverDAO = factory.create(DriverDAO.class);
+				CarDAO carDAO = factory.create(CarDAO.class);
+				
+				driverDAO.updateByParam(driver);
+				for(TAirshuttleCar car : driver.getCarList()){
+					
+					carDAO.updateByParam(car);
+				}
+				return null;
+			}
+		});
 	}
 	
-	/***
-	 * 插入司机和车辆关联表信息
-	 */
-	public void insertDriverCar(TAirshuttleDriverCar tAirshuttleDriverCar){
-		
-		this.driverCarDAO.insert(tAirshuttleDriverCar);
-	}
-
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void insertDriverMsg(final TAirshuttleDriver driver){
+		
+		final DataSource dataSource = this.getDataSource();
+		DataSourceTransactionManager dstm = new DataSourceTransactionManager();
+		dstm.setDataSource(dataSource);
+		TransactionTemplate tt = new TransactionTemplate(dstm);
+		tt.execute(new TransactionCallback() {
+			public Object doInTransaction(TransactionStatus status) {
+				
+				JadeFactory factory = new JadeFactory(dataSource);
+				DriverDAO driverDAO = factory.create(DriverDAO.class);
+				CarDAO carDAO = factory.create(CarDAO.class);
+				DriverCarDAO driverCarDAO = factory.create(DriverCarDAO.class);
+				
+				//插入司机
+				Integer driverId = driverDAO.insert(driver);
+				
+				//插入车辆
+				for(TAirshuttleCar car : driver.getCarList()){
+					
+					Integer carId = carDAO.insert(car);
+					
+					TAirshuttleDriverCar driverCar = new TAirshuttleDriverCar();
+					driverCar.setCarId(carId);
+					driverCar.setDriverId(driverId);
+					
+					driverCarDAO.insert(driverCar);
+				}
+				
+				
+				return null;
+			}
+		});
+	}
 }
