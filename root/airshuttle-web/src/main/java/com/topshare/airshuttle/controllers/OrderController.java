@@ -35,7 +35,7 @@ public class OrderController extends BaseController {
 	private OrderService orderService;
 	
 	@Autowired
-	private OrderProcessService orderServiceProcessService;
+	private OrderProcessService orderProcessService;
 
 	@Get("/findorder")
 	public String findOrder(Invocation inv,TAirshuttleOrder tAirshuttleOrder,@Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
