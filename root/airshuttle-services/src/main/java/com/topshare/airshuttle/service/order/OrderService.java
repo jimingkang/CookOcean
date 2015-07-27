@@ -60,11 +60,14 @@ public class OrderService {
 	public Integer alipayfeedback(TAirshuttleOrder tAirshuttleOrder) {
 	
 
-		 tAirshuttleOrder.setReviewProcessId(Integer.valueOf(1));  //1  pay successfully
+		
 		 TAirshuttleUserBookDriver  tAirshuttleUserBookDriver=new TAirshuttleUserBookDriver();
 		 tAirshuttleUserBookDriver.setId(tAirshuttleOrder.getBookId());
-		 tAirshuttleUserBookDriver.setReviewProcessId(3);
+		 
+		 System.out.println("tAirshuttleUserBookDriver jimmy :" + tAirshuttleUserBookDriver.getId());
+		 tAirshuttleUserBookDriver.setReviewProcessId(3);          //3 mean  alipay   pay successfully
 		 bookDriverProcessDAO.insert(tAirshuttleUserBookDriver);  //用tAirshuttleUserBookDriver 去插入bookDriverProcess
+		 tAirshuttleOrder.setReviewProcessId(Integer.valueOf(3));  //3  prepay successfully waiting for xieyun commit
 		return orderProcessDAO.insertAfterailpayFeedBack(tAirshuttleOrder);
 		
 	}
@@ -82,5 +85,15 @@ public class OrderService {
 		orderProcessDAO.updateOrderProcess(tAirshuttleOrder);
 		return orderDAO.updateOrder(tAirshuttleOrder);
 	}
+
+
+
+	public TAirshuttleOrder getOrderByDesignNumber(String trade_no) {
+		// TODO Auto-generated method stub
+		return orderDAO.getOrderByDesignNumber(trade_no);
+	}
+
+
+
 
 }

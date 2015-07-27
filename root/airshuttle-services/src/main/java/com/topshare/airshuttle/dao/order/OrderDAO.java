@@ -48,8 +48,10 @@ public interface OrderDAO {
 			@SQLParam("d") TAirshuttleOrder tAirshuttleOrder);
 
 	@SQL(" select id,designation_number, create_time, MODIFY_TIME, user_id, book_id, driver_id, reception_air_id, book_number_person,pick_up_time, book_price"
-			+ " from t_airshuttle_order where user_id = :designationNumber")
+			+ " from t_airshuttle_order where designation_number = :designationNumber")
 	public TAirshuttleOrder getOrderByDesignNumber( @SQLParam("designationNumber") String designationNumber);
+
+	
 
 	
 	

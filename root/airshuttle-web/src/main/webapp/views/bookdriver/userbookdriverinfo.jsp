@@ -248,8 +248,9 @@ form.submit();
 							
 				            <input type="hidden" name="receptionAirId" id="receptionAirId-${item.id}" value="${item.receptionAirId}"/>
 				            <input type="hidden" name="bookPrice" id="bookPrice-${item.id}" value="${item.bookPrice}"/> 
-				            <input type="hidden" name="driverId" id="bookPrice-${item.id}" value="${item.driverId}"/> 
-				             <input type="hidden" name="userId" id="bookPrice-${item.id}" value="${item.userId}"/> 
+				            <input type="hidden" name="driverId" id="driverId-${item.id}" value="${item.driverId}"/> 
+				            <input type="hidden" name="bookId" id="bookId-${item.id}" value="${item.id}"/> 
+				             <input type="hidden" name="userId" id="userId-${item.id}" value="${item.userId}"/> 
 				             <input type="hidden" name="pickUpTime" id="pickUpTime-${item.id}" value="${item.pickUpTime}"/> 
 							<font style="font-weight: small;" size="4"><a class='wsite-button' onclick="order(${item.id})"><span class='wsite-button-inner'>立即支付</span></a></font>
 							</form>

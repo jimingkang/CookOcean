@@ -172,7 +172,7 @@ ul,ol{
 					<dt>订单名称：</dt>
 					<dd>
 						<span class="null-star">*</span>
-						<input size="30" name="WIDsubject" />
+						<input size="30" name="WIDsubject" value="${designationNumber}" />
 						<span>必填</span>
 					</dd>
 					<dt>付款金额：</dt>

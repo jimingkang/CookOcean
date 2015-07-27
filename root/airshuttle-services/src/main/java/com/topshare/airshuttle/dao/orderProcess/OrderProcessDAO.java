@@ -32,7 +32,7 @@ public interface OrderProcessDAO {
 	
 	@ReturnGeneratedKeys
 	@SQL("insert into t_airshuttle_order_process (order_id, review_process_id,"
-			+ "process_result_desc, create_time,MODIFY_TIME)"
+			+ "process_result_desc, MODIFY_TIME)"
 			+ "values(:d.id,:d.reviewProcessId,:d.processResultDesc,:d.modifyTime)")
 	public Integer insertAfterailpayFeedBack(@SQLParam("d")  TAirshuttleOrder tAirshuttleOrder);
 	
