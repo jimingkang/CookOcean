@@ -226,7 +226,7 @@ public class FileUtils {
 		return absPath;
 	}
 
-	private static String getExtName(String fileName) {
+	public static String getExtName(String fileName) {
 		int s = fileName.lastIndexOf(".");
 		if (s < 0) {
 			return fileName;
@@ -252,7 +252,7 @@ public class FileUtils {
 		return pathFile;
 	}
 
-	private static void mkdir(String path) {
+	public static void mkdir(String path) {
 		File f = new File(path);
 		if (f.exists()) {
 			return;
