@@ -33,6 +33,6 @@ public class UserServiceTest extends BaseTransServiceTest{
 		UserDAO dao = factory.create(UserDAO.class);
 		
 		TAirshuttleUser searchUser = dao.getUserByLogin(user);
-		logger.info(searchUser);
+		logger.info(searchUser.getUsername());
 	}
 }
