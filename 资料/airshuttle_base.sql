@@ -13,6 +13,7 @@ MySQL - 5.6.22-log : Database - airshuttle
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`airshuttle` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `airshuttle`;
@@ -272,6 +273,7 @@ CREATE TABLE `t_airshuttle_order` (
   `create_time` datetime DEFAULT NULL,
   `MODIFY_TIME` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_id` int(11) DEFAULT NULL COMMENT '用户编号',
+  `book_id` int(11) DEFAULT NULL COMMENT 'book_id',
   `driver_id` int(11) DEFAULT NULL COMMENT '司机编号',
   `reception_air_id` int(11) DEFAULT NULL COMMENT '接机表id(t_airshuttle_reception_air)',
   `book_number_person` int(11) DEFAULT NULL COMMENT '预约人数',
