@@ -91,11 +91,11 @@ public class UserLoginFilter implements Filter {
 			user.setPassword(dBEncrypt.eCode(password));
 			user = userDAO.getUserByLogin(user);
 			
-//			if(user == null){
-//			
-//				hresponse.sendRedirect(hrequest.getContextPath()+"/login.jsp");
-//				return;
-//			}
+			if(user == null){
+			
+				hresponse.sendRedirect(hrequest.getContextPath()+"/login.jsp");
+				return;
+			}
 			session.setAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY, user);
 			hresponse.sendRedirect(hrequest.getContextPath()+"/views/layout/main.html");
 			return;
