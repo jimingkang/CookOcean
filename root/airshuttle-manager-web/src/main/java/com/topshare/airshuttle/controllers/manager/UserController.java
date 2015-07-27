@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.topshare.airshuttle.common.util.ConstantsUtil;
 import com.topshare.airshuttle.common.util.DBEncrypt;
 import com.topshare.airshuttle.common.util.Page;
+import com.topshare.airshuttle.common.util.ResponseObject;
 import com.topshare.airshuttle.controllers.BaseController;
 import com.topshare.airshuttle.dao.userManager.UserDAO;
 import com.topshare.airshuttle.model.userManager.TAirshuttleUser;
@@ -189,7 +190,7 @@ public class UserController extends BaseController{
 			user.setEnabled(enabled);
 			user.setModifyPerson(curUserId);
 			user.setModifyTime(new Date());
-			userDAO.updateByParam(user);
+			userDAO.updateParamById(user);
 			
 			//判断是否是修改自己的信息
 			if(curUserId.equals(userId)){
