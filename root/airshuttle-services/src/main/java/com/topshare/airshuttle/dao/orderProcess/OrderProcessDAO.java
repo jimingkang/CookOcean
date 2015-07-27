@@ -28,7 +28,14 @@ public interface OrderProcessDAO {
 	@SQL("insert into t_airshuttle_order_process (order_id, review_process_id,"
 			+ "process_result_desc, create_time)"
 			+ "values(:d.id,:d.reviewProcessId,:d.processResultDesc,now())")
-	public void insert(@SQLParam("d")  TAirshuttleOrder tAirshuttleOrder);
+	public Integer insert(@SQLParam("d")  TAirshuttleOrder tAirshuttleOrder);
+	
+	@ReturnGeneratedKeys
+	@SQL("insert into t_airshuttle_order_process (order_id, review_process_id,"
+			+ "process_result_desc, create_time,MODIFY_TIME)"
+			+ "values(:d.id,:d.reviewProcessId,:d.processResultDesc,:d.modifyTime)")
+	public Integer insertAfterailpayFeedBack(@SQLParam("d")  TAirshuttleOrder tAirshuttleOrder);
+	
 
 	public void updateOrderProcess(TAirshuttleOrder tAirshuttleOrder);
 }

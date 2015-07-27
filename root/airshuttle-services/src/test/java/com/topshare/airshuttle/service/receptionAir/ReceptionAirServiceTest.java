@@ -37,17 +37,17 @@ public class ReceptionAirServiceTest extends BaseTransServiceTest{
 	@Test
 	public void insert(){
 		
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 5; i++) {
 			
 			TAirshuttleReceptionAir ta = new TAirshuttleReceptionAir();
 			ta.setCreatePerson(1);
-			ta.setReceptionCity("LA");
-			ta.setReceptionSchool("UCLA");
-			ta.setReceptionAirport("LAX");
-			ta.setDriverId(1000+i);
+			ta.setReceptionCity("NY");
+			ta.setReceptionSchool("NYC");
+			ta.setReceptionAirport("KEN");
+			ta.setDriverId(2000+i);
 			ta.setCarId(i);
-			ta.setOpenTime("2015-07-28");
-			ta.setPrice("100");
+			ta.setOpenTime("Mon-Fri 1:pm-8:pm");
+			ta.setPrice("10");
 			ta.setLoadSeatnum(4);
 			
 			receptionAirDAO.insert(ta);

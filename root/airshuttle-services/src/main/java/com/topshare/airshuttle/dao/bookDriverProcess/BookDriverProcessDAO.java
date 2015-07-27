@@ -31,11 +31,11 @@ public interface BookDriverProcessDAO {
 			+ "where id = :d.bookDriverProcessId ")
 	public Integer updateBookProcess(@SQLParam("d") TAirshuttleUserBookDriver tAirshuttleUserBookDriver);
 	
+	
 	@ReturnGeneratedKeys
 	@SQL("insert into t_airshuttle_book_driver_process (book_driver_id, review_process_id,"
-			+ "process_result_desc, create_time)"
+			+ "process_result_desc, MODIFY_TIME)"
 			+ "values(:d.id,:d.status,:d.processResultDesc,now())")
-
 	public void insert(@SQLParam("d") TAirshuttleUserBookDriver tAirshuttleUserBookDriver);
 
 	

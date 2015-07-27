@@ -14,9 +14,9 @@ import com.topshare.airshuttle.model.order.TAirshuttleOrder;
 public interface OrderDAO {
 
 	@ReturnGeneratedKeys
-	@SQL(" insert into t_airshuttle_order (designation_number,create_time,user_id, driver_id, reception_air_id,"
+	@SQL(" insert into t_airshuttle_order (designation_number,create_time,user_id, book_id, driver_id, reception_air_id,"
 			+ "book_number_person, pick_up_time, book_price)"
-			+ "values(:d.designationNumber,now(),:d.userId,:d.driverId,:d.receptionAirId,:d.bookNumberPerson,:d.pickUpTime,:d.bookPrice)")
+			+ "values(:d.designationNumber,now(),:d.userId,:d.bookId,:d.driverId,:d.receptionAirId,:d.bookNumberPerson,:d.pickUpTime,:d.bookPrice)")
 	public Integer insert(@SQLParam("d") TAirshuttleOrder t);
 	
 	/***
@@ -36,16 +36,20 @@ public interface OrderDAO {
 	 * @param driverId
 	 * @return
 	 */
-	@SQL(" select id, designation_number, create_time, MODIFY_TIME, user_id, driver_id, reception_air_id, book_number_person,pick_up_time, book_price"
+	@SQL(" select id, designation_number, create_time, MODIFY_TIME, user_id,book_id,  driver_id, reception_air_id, book_number_person,pick_up_time, book_price"
 			+ " from t_airshuttle_order where driver_id = :driverId")
 	public List<TAirshuttleOrder> getOrderByDriverId(@SQLParam("driverId") Integer driverId);
 
 	public Page<TAirshuttleOrder> updateOrder(TAirshuttleOrder tAirshuttleOrder);
 
-	@SQL(" select id,designation_number, create_time, MODIFY_TIME, user_id, driver_id, reception_air_id, book_number_person,pick_up_time, book_price"
+	@SQL(" select id,designation_number, create_time, MODIFY_TIME, user_id, book_id, driver_id, reception_air_id, book_number_person,pick_up_time, book_price"
 			+ " from t_airshuttle_order where user_id = :d.userId")
 	public List<TAirshuttleOrder> getOrderByUserId(
 			@SQLParam("d") TAirshuttleOrder tAirshuttleOrder);
+
+	@SQL(" select id,designation_number, create_time, MODIFY_TIME, user_id, book_id, driver_id, reception_air_id, book_number_person,pick_up_time, book_price"
+			+ " from t_airshuttle_order where user_id = :designationNumber")
+	public TAirshuttleOrder getOrderByDesignNumber( @SQLParam("designationNumber") String designationNumber);
 
 	
 	

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.topshare.airshuttle.common.util.Page;
+import com.topshare.airshuttle.dao.bookDriverProcess.BookDriverProcessDAO;
 import com.topshare.airshuttle.dao.order.OrderDAO;
 import com.topshare.airshuttle.dao.orderProcess.OrderProcessDAO;
 import com.topshare.airshuttle.model.order.TAirshuttleOrder;
+import com.topshare.airshuttle.model.userBookDriver.TAirshuttleUserBookDriver;
 
 @Service
 public class OrderService {
@@ -16,6 +18,8 @@ public class OrderService {
 	private OrderDAO orderDAO;
 	@Autowired
 	OrderProcessDAO orderProcessDAO;
+	@Autowired
+	BookDriverProcessDAO bookDriverProcessDAO;
 	
 	public Page<TAirshuttleOrder> getByUserId(
 			TAirshuttleOrder tAirshuttleOrder, Integer pageNumber,
@@ -51,6 +55,18 @@ public class OrderService {
 		 tAirshuttleOrder.setId(id);
 		 orderProcessDAO.insert(tAirshuttleOrder);
 		 return id;
+	}
+	
+	public Integer alipayfeedback(TAirshuttleOrder tAirshuttleOrder) {
+	
+
+		 tAirshuttleOrder.setReviewProcessId(Integer.valueOf(1));  //1  pay successfully
+		 TAirshuttleUserBookDriver  tAirshuttleUserBookDriver=new TAirshuttleUserBookDriver();
+		 tAirshuttleUserBookDriver.setId(tAirshuttleOrder.getBookId());
+		 tAirshuttleUserBookDriver.setReviewProcessId(3);
+		 bookDriverProcessDAO.insert(tAirshuttleUserBookDriver);  //用tAirshuttleUserBookDriver 去插入bookDriverProcess
+		return orderProcessDAO.insertAfterailpayFeedBack(tAirshuttleOrder);
+		
 	}
 	
 

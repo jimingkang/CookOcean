@@ -2,9 +2,11 @@ package com.topshare.airshuttle.controllers;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +22,11 @@ import net.paoding.rose.web.var.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alipay.config.AlipayConfig;
+import com.alipay.util.AlipayNotify;
 import com.alipay.util.AlipaySubmit;
 import com.topshare.airshuttle.common.util.Page;
 import com.topshare.airshuttle.common.util.ResponseObject;
+import com.topshare.airshuttle.dao.order.OrderDAO;
 import com.topshare.airshuttle.model.order.TAirshuttleOrder;
 import com.topshare.airshuttle.service.order.OrderService;
 import com.topshare.airshuttle.service.orderProcess.OrderProcessService;
@@ -36,6 +40,9 @@ public class OrderController extends BaseController {
 	
 	@Autowired
 	private OrderProcessService orderProcessService;
+	@Autowired
+	OrderDAO orderDAO;
+	
 
 	@Get("/findorder")
 	public String findOrder(Invocation inv,TAirshuttleOrder tAirshuttleOrder,@Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
@@ -122,7 +129,7 @@ public class OrderController extends BaseController {
 		//需http://格式的完整路径，不能加?id=123这类自定义参数
 
 		//页面跳转同步通知页面路径
-		String return_url = "http://sinoustravel.com/return_url.jsp";
+		String return_url = "http://sinoustravel.com/order/return_url";
 		//需http://格式的完整路径，不能加?id=123这类自定义参数，不能写成http://localhost/
 
 		//商户订单号
@@ -158,7 +165,7 @@ public class OrderController extends BaseController {
 			//商品展示地址
 			String show_url = new String(request.getParameter("WIDshow_url").getBytes("ISO-8859-1"),"UTF-8");
 			//需以http://开头的完整路径，如：http://www.商户网站.com/myorder.html
-	/*
+	
 			//收货人姓名
 			String receive_name = new String(request.getParameter("WIDreceive_name").getBytes("ISO-8859-1"),"UTF-8");
 			//如：张三
@@ -178,7 +185,7 @@ public class OrderController extends BaseController {
 			//收货人手机号码
 			String receive_mobile = new String(request.getParameter("WIDreceive_mobile").getBytes("ISO-8859-1"),"UTF-8");
 			//如：13312341234
-		*/	
+		
 			
 			//////////////////////////////////////////////////////////////////////////////////
 			
@@ -200,22 +207,22 @@ public class OrderController extends BaseController {
 			sParaTemp.put("logistics_payment", logistics_payment);
 			sParaTemp.put("body", body);
 			sParaTemp.put("show_url", show_url);
-			//sParaTemp.put("receive_name", receive_name);
-			//sParaTemp.put("receive_address", receive_address);
-			//sParaTemp.put("receive_zip", receive_zip);
-			//sParaTemp.put("receive_phone", receive_phone);
-			//sParaTemp.put("receive_mobile", receive_mobile);
+			sParaTemp.put("receive_name", receive_name);
+			sParaTemp.put("receive_address", receive_address);
+			sParaTemp.put("receive_zip", receive_zip);
+			sParaTemp.put("receive_phone", receive_phone);
+			sParaTemp.put("receive_mobile", receive_mobile);
 			
 			//建立请求
 			String sHtmlText = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
-			inv.getResponse().getOutputStream().println(sHtmlText);
+			inv.getResponse().getWriter().println(sHtmlText);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	@Get("/insertorder")
-	public String insertUserBookDriver(Model model,Invocation inv,TAirshuttleOrder tAirshuttleOrder, @Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
+	public String insertOrder(Model model,Invocation inv,TAirshuttleOrder tAirshuttleOrder, @Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
 		
 			) {
 		
@@ -231,7 +238,7 @@ public class OrderController extends BaseController {
 			Date curDate = new Date();
 
 			tAirshuttleOrder.setCreateTime(curDate);
-			tAirshuttleOrder.setDesignationNumber(Long.toString(System.currentTimeMillis()));
+			tAirshuttleOrder.setDesignationNumber("Order_"+Long.toString(System.currentTimeMillis()));
 			
 			Integer id = orderService.insert(tAirshuttleOrder);
 			
@@ -251,6 +258,107 @@ public class OrderController extends BaseController {
 		}
 		
 		
+	}
+	@Get("/return_url")
+	public void alipayfeedback(Invocation inv){
+		//支付类型
+		HttpServletRequest request=inv.getRequest();
+		inv.getResponse().setContentType("text/html;charset=UTF-8"); 
+
+		//获取支付宝GET过来反馈信息
+		Map<String,String> params = new HashMap<String,String>();
+		Map requestParams = request.getParameterMap();
+		for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext();) {
+			String name = (String) iter.next();
+			String[] values = (String[]) requestParams.get(name);
+			String valueStr = "";
+			for (int i = 0; i < values.length; i++) {
+				valueStr = (i == values.length - 1) ? valueStr + values[i]
+						: valueStr + values[i] + ",";
+			}
+			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
+			try {
+				valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			params.put(name, valueStr);
+		}
+		
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
+		//商户订单号
+
+		try {
+			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		//支付宝交易号
+		
+		String trade_no=null;
+		try {
+			 trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		//交易状态
+		String trade_status=null;
+		try {
+			trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
+		
+		//计算得出通知验证结果
+		boolean verify_result = AlipayNotify.verify(params);
+		
+		if(verify_result){//验证成功
+			//////////////////////////////////////////////////////////////////////////////////////////
+			//请在这里加上商户的业务逻辑程序代码
+			
+			//——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+			
+			if(trade_status.equals("WAIT_SELLER_SEND_GOODS")){
+				//判断该笔订单是否在商户网站中已经做过处理
+					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+					//如果有做过处理，不执行商户的业务程序
+			}
+			
+			//该页面可做页面美工编辑
+			try {
+				TAirshuttleOrder tAirshuttleOrder = new TAirshuttleOrder();
+				Date curDate = new Date();
+
+				tAirshuttleOrder.setModifyTime(curDate);
+				tAirshuttleOrder.setDesignationNumber(trade_no);
+				orderDAO.getOrderByDesignNumber(trade_no)
+				Integer id = orderService.alipayfeedback(tAirshuttleOrder);
+				inv.getResponse().getWriter().println("验证成功<br />");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
+
+			//////////////////////////////////////////////////////////////////////////////////////////
+		}else{
+			//该页面可做页面美工编辑
+			try {
+				inv.getResponse().getWriter().println("验证失败");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 

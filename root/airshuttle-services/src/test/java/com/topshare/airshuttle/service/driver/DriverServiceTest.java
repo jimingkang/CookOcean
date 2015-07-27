@@ -46,7 +46,7 @@ public class DriverServiceTest extends BaseTransServiceTest{
 	@Test
 	public void insertTest(){
 		
-		for (int i = 0; i < 500; i++) {
+		for (int i = 0; i < 5; i++) {
 			
 			TAirshuttleDriver tAirshuttleDriver = new TAirshuttleDriver();
 			tAirshuttleDriver.setCreatePerson(1);
