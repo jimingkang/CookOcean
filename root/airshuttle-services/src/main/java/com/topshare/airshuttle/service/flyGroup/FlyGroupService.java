@@ -27,16 +27,6 @@ public class FlyGroupService extends BaseTransService{
 	@Autowired
 	private FlyGroupDAO flyGroupDAO;
 	
-	public Integer insert(TAirshuttleFlyGroup tAirshuttleFlyGroup){
-		
-		return flyGroupDAO.insert(tAirshuttleFlyGroup);
-	}
-	
-	public void updateByParam(TAirshuttleFlyGroup flyGroup){
-		
-		flyGroupDAO.updateByParam(flyGroup);
-	}
-	
 	/***
 	 * 分页查询
 	 */
