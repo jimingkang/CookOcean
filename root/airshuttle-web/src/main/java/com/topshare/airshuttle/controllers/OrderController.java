@@ -119,7 +119,7 @@ public class OrderController extends BaseController {
 				String trade_no = null;
 		//交易状态
 				String trade_status = null;
-		try {
+	
 			//商户订单号
 			 out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 			//支付宝交易号
@@ -128,10 +128,7 @@ public class OrderController extends BaseController {
 
 			//交易状态
 			 trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 		
 
