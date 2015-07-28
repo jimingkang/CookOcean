@@ -76,58 +76,58 @@ public class UserLoginFilter implements Filter {
         }
     	
     	
-    	//logger.info("uri:"+uri);
-//		if(uri.contains("/user/login")){
-//			
-//			String username = hrequest.getParameter("username");
-//			String password = hrequest.getParameter("password");
-//			
-//			//TODO
-//			TAirshuttleUser user = new TAirshuttleUser();
-//			user.setUsername(username);
-//			user.setPassword(password);
-//			DBEncrypt dBEncrypt = new DBEncrypt();
-//			user.setPassword(dBEncrypt.eCode(password));
-//			user = userDAO.getUserByLogin(user);
-//
-//			
-//			if(user == null){
-//			
-//				hresponse.sendRedirect(hrequest.getContextPath()+"/index.jsp");
-//				return;
-//			}
-//			//System.out.println("jimmy test "+ user.getPassword());
-//			session.setAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY, user);
-//			hresponse.sendRedirect(hrequest.getContextPath()+"/views/index.jsp");
-//			return;
-//		}else if(uri.contains("/user/loginOut")){
-//			try {
-//				session.invalidate();
-//				hresponse.sendRedirect(hrequest.getContextPath()+"/login.jsp");
-//				return;
-//			} catch (Exception e) {
-//			}
-//
-//		}else{
-//			//非登陆显示页面，请放到非view文件夹外
-//			if(uri.contains("index.jsp")){
-//				chain.doFilter(request, response);
-//				return;
-//			}else{
-//				User user = (User)session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
-//				//跳转到登录页面
-//				if(user == null){
-//					
-//					hresponse.sendRedirect(hrequest.getContextPath()+"/index.jsp");
-//					return;
-//				}else{
-//					//校验请求合法性
-//					//TODO
-//					chain.doFilter(request, response);
-//					return;
-//				}
-//			}
-//		}
+    	logger.info("uri:"+uri);
+		if(uri.contains("/user/login")){
+			
+			String username = hrequest.getParameter("username");
+			String password = hrequest.getParameter("password");
+			
+			//TODO
+			TAirshuttleUser user = new TAirshuttleUser();
+			user.setUsername(username);
+			user.setPassword(password);
+			DBEncrypt dBEncrypt = new DBEncrypt();
+			user.setPassword(dBEncrypt.eCode(password));
+			user = userDAO.getUserByLogin(user);
+
+			
+			if(user == null){
+			
+				hresponse.sendRedirect(hrequest.getContextPath()+"/index.jsp");
+				return;
+			}
+			//System.out.println("jimmy test "+ user.getPassword());
+			session.setAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY, user);
+			hresponse.sendRedirect(hrequest.getContextPath()+"/views/index.jsp");
+			return;
+		}else if(uri.contains("/user/loginOut")){
+			try {
+				session.invalidate();
+				hresponse.sendRedirect(hrequest.getContextPath()+"/login.jsp");
+				return;
+			} catch (Exception e) {
+			}
+
+		}else{
+			//非登陆显示页面，请放到非view文件夹外
+			if(uri.contains("/front/")){
+				chain.doFilter(request, response);
+				return;
+			}else{
+				User user = (User)session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+				//跳转到登录页面
+				if(user == null){
+					
+					hresponse.sendRedirect(hrequest.getContextPath()+"/index.jsp");
+					return;
+				}else{
+					//校验请求合法性
+					//TODO
+					chain.doFilter(request, response);
+					return;
+				}
+			}
+		}
 		
 	}
 
