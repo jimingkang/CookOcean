@@ -1,0 +1,13 @@
+{
+    "status": {
+        "code": 200,
+        "message": "获取分页数据成功"
+    },
+    "data": [{
+        "keyWord": "医疗器械"
+    }, {
+        "keyWord": "医疗公司"
+    }, {
+        "keyWord": "医疗事故"
+    }]
+}

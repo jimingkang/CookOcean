@@ -1,0 +1,35 @@
+
+{
+    "status": {
+        "code": 200,
+        "message": "获取分页数据成功"
+    },
+    "data": {
+        "totalRecord": 113,
+        "content": [{
+            "keyWord": "微博",
+            "searchCount": "33245"
+        }, {
+            "keyWord": "iPhone 6",
+            "searchCount": "2333"
+        }, {
+            "keyWord": "网页打不开",
+            "searchCount": "1334"
+        }, {
+            "keyWord": "网页打不开",
+            "searchCount": "1334"
+        }, {
+            "keyWord": "网页打不开",
+            "searchCount": "1334"
+        }, {
+            "keyWord": "网页打不开",
+            "searchCount": "1334"
+        }, {
+            "keyWord": "网页打不开",
+            "searchCount": "1334"
+        }, {
+            "keyWord": "网页打不开",
+            "searchCount": "1334"
+        }]
+    }
+}

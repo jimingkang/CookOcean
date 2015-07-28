@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/icons/favorite.ico"/>
+
+    <!-- lib -->
+    <link rel="stylesheet" href="../scripts/lib/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../scripts/lib/bootstrap-3.3.4/themes/bootswatch.min.css">
+    <link rel="stylesheet" href="../scripts/lib/fontawesome-4.3.0/css/font-awesome.min.css">
+
+    <!-- plugins -->
+    <link rel="stylesheet" href="../scripts/plugins/bigautocomplete/jquery.bigautocomplete.css">
+
+    <!-- page's -->
+    <link rel="stylesheet" href="../styles/results.css">
+
+    <title>凌云搜索</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="home.html">
+                <img alt="电科凌云" src="../assets/imgs/logo.png"></a>
+            <div class="navbar-form navbar-left" role="search">
+                <div class="input-group">
+                    <input id="keyword" class="form-control " type="text" autocomplete="off">
+                    <span class="input-group-btn">
+                        <button id="search" class="btn btn-default " type="button">凌云搜索</button> <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row result">
+            <div class="col-lg-5 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-7">
+                <div>
+                    <div class="result-count">
+                        找到约 <em id="total-result"></em>
+                        条数据
+                    </div>
+                    <ul id="result-list"></ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-lg-offset-1 col-md-3 col-md-offset-1  col-sm-4">
+                <div class="info-modal">
+                    <h4>热搜榜</h4>
+                    <ul class="hot-board" id="hot"></ul>
+                </div>
+            </div>
+        </div>
+        <nav id="pager"></nav>
+    </div>
+
+    <ul id="tmp-result" class="hide">
+        <li>
+            <div class="result-item" data-id="${id}">
+                <h4 class="result-title">
+                    <a href="${linkUrl}">${title}</a>
+                </h4>
+                <cite class="result-site">${siteUrl}</cite>
+                <div class="result-info">${desc}</div>
+            </div>
+        </li>
+    </ul>
+    <ul id="tmp-hot" class="hide">
+        <li >
+            <span class="badge"></span>
+            <a href="#">${keyWord}</a>
+            <span class="result-count pull-right">${searchCount}</span>
+        </li>
+    </ul>
+    <!-- lib -->
+    <script src="../scripts/lib/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <script src="../scripts/lib/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- plugins -->
+    <script src="../scripts/plugins/bigautocomplete/jquery.bigautocomplete.js"></script>
+    <script src="../scripts/plugins/jquery.tmpl.min.js"></script>
+    <script src="../scripts/plugins/jquery.com.toolkit.js"></script>
+    <script src="../scripts/plugins/jquery.pagination.js"></script>
+    <script src="../scripts/plugins/jquery.highlight.js"></script>
+
+    <!-- page's -->
+    <script src="../scripts/datacontroller/ajaxdatacontroller.js"></script>
+    <script src="../scripts/datacontroller/keywordcontroller.js"></script>
+    <script src="../scripts/results.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+body {
+    background-image: url(../assets/imgs/back.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.search-bar {
+    margin: 20% auto;
+}
+.nav-tab {
+    margin: 15px 0;
+}
+.nav-tab li {
+    float: left;
+    margin-right: 15px;
+}
+.nav-tab .active>a {
+    border-bottom: solid 2px #85828D;
+}
+.nav-tab li >a {
+    display: block;
+    color: #fff;
+    padding: 7px 10px;
+}
+.nav-tab li >a:hover {
+    background-color: #122333;
+}

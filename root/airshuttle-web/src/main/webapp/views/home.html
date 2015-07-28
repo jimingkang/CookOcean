@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/icons/favorite.ico"/>
+
+    <!-- lib -->
+    <link rel="stylesheet" href="../scripts/lib/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../scripts/lib/bootstrap-3.3.4/themes/bootswatch.min.css">
+    <link rel="stylesheet" href="../scripts/lib/fontawesome-4.3.0/css/font-awesome.min.css">
+
+    <!-- plugins -->
+    <link rel="stylesheet" href="../scripts/plugins/bigautocomplete/jquery.bigautocomplete.css">
+
+    <!-- page's -->
+    <link rel="stylesheet" href="../styles/home.css">
+
+    <title>海聚吧</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="home.html">海聚吧</a>
+        </div>
+        <ul class="nav navbar-nav  navbar-left">
+            <li class="active">
+                <a href="#">首页</a>
+            </li>
+            <li>
+                <a href="#">拼车</a>
+            </li>
+            <li>
+                <a href="#">大家说</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="login.html">登录</a>
+            </li>
+            <li>
+                <a href="register.html">注册</a>
+            </li>
+            <li>
+                <a href="#"></a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row search-bar">
+            <div class="col-xs-12 col-lg-4 col-lg-offset-4 col-md-10">
+                <ul class="nav nav-tab">
+                    <li role="presentation"  class="active">
+                        <a href="#">接机预约</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">聚友召集</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">室友召集</a>
+                    </li>
+                </ul>
+                <div class="input-group">
+                    <input id="keyword" class="form-control input-lg" type="text" autocomplete="off">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-lg" type="button"> <i class="fa fa-search"></i>
+                            聚！
+                        </button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- lib -->
+    <script src="../scripts/lib/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <script src="../scripts/lib/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- plugins -->
+    <script src="../scripts/plugins/bigautocomplete/jquery.bigautocomplete.js"></script>
+    <script src="../scripts/plugins/jquery.tmpl.min.js"></script>
+    <script src="../scripts/plugins/jquery.com.toolkit.js"></script>
+    <script src="../scripts/plugins/jquery.pagination.js"></script>
+    <script src="../scripts/plugins/jquery.highlight.js"></script>
+
+    <!-- page's -->
+    <script src="../scripts/datacontroller/ajaxdatacontroller.js"></script>
+    <script src="../scripts/datacontroller/keywordcontroller.js"></script>
+    <script src="../scripts/results.js"></script>
+</body>
+</html>

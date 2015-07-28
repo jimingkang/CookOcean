@@ -1,0 +1,67 @@
+.navbar-brand img{
+    max-height: 20px;
+}
+
+.input-group input[type=text]{
+    min-width: 450px;
+}
+
+.result{
+    margin-top: 30px;
+}
+
+.result .result-count{
+    color: #ccc;
+    font-size: 80%;
+}
+
+.result .result-count em{
+    margin:auto 3px;
+}
+
+.result ul{
+    margin-top: 20px;
+    padding: 0;
+}
+.result li{
+    list-style: none;
+    margin: 30px auto;
+}
+
+.result .result-title{
+    margin-bottom: 0;
+}
+
+.result .result-info{
+    font-size: 90%;
+}
+
+.result cite{
+      font-size: 90%;
+    color: green;
+}
+.result .info-modal h4{
+    color: #999;
+    font-size: 110%;
+    font-weight: bold;
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #efefef;
+}
+.result .hot-board{
+    margin-top: 0;
+}
+.result .hot-board li{
+    margin: 10px auto;
+}
+
+.result .hot-board .badge{
+    margin-right: 5px;
+}
+.highlight{
+    background-color: yellow;
+    color: red;
+}
+.hot-top{
+    background-color: red;
+}

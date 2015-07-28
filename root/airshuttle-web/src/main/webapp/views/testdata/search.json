@@ -1,0 +1,34 @@
+{
+    "status": {
+        "code": 200,
+        "message": "获取分页数据成功"
+    },
+    "data": {
+        "totalRecord": 3,
+        "content": [{
+            "id": 1,
+            "title": "GE 医疗中国 创新科技关爱大众健康",
+            "desc": "GE 医疗集团隶属于 GE 通用电器公司，提供革新性的医疗技术和服务。以满足需求，使全世界更多的人能够以更可负担的成本获得更好的医疗服务。",
+            "siteName": "中国医疗器械信息网",
+            "siteUrl": "www.cmdi.gov.cn",
+            "linkUrl": "www.cmdi.gov.cn/post/111232.html",
+            "dateTime": "2015-06-11 13:23:01"
+        }, {
+            "id": 2,
+            "title": "这十大创新将让医疗行业改变得更彻底",
+            "desc": "医疗与健康行业将迎来巨大的科技创新与变革，也许有一天我们会突然发现我们所熟悉的病人与医生互动的诊疗模式已不复存在",
+            "siteName": "中国医疗器械信息网",
+            "siteUrl": "www.cmdi.gov.cn",
+            "linkUrl": "www.cmdi.gov.cn/post/111232.html",
+            "dateTime": "2015-06-11 13:23:01"
+        }, {
+            "id": 3,
+            "title": "移动医疗不“解渴”咋办？",
+            "desc": "移动医疗兴起之后，相关部门一直在讨论一个问题，在这类平台上，医生们提供的服务到底是医疗问题，还是普通的咨询问题？",
+            "siteName": "中国医疗器械信息网",
+            "siteUrl": "www.cmdi.gov.cn",
+            "linkUrl": "www.cmdi.gov.cn/post/111232.html",
+            "dateTime": "2015-06-11 13:23:01"
+        }]
+    }
+}
