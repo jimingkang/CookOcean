@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.topshare.airshuttle.common.util.ConstantsUtil;
 import com.topshare.airshuttle.common.util.Page;
+import com.topshare.airshuttle.common.util.ResponseObject;
 import com.topshare.airshuttle.controllers.BaseController;
 import com.topshare.airshuttle.dao.userManager.RoleDAO;
 import com.topshare.airshuttle.dao.userManager.RoleRescDAO;
@@ -74,31 +75,20 @@ public class RoleController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Post("/insertUserRole")
-	public String insertUserRole(Invocation inv,@Param("roleIds") List<Integer> roleIds,@Param("userId") Integer userId){
+	public String insertUserRole(Invocation inv,@Param("roleIds") List<Integer> roleIds,@Param("userId") Integer userId) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
+		List<TAirshuttleUserRole> userRoleList = new ArrayList<TAirshuttleUserRole>();
 		
-		try {
+		for(Integer roleId : roleIds){
 			
-			List<TAirshuttleUserRole> userRoleList = new ArrayList<TAirshuttleUserRole>();
-			
-			for(Integer roleId : roleIds){
-				
-				TAirshuttleUserRole userRole = new TAirshuttleUserRole();
-				userRole.setUserId(userId);
-				userRole.setRoleId(roleId);
-				userRoleList.add(userRole);
-			}
-			
-			if(userRoleList.size() > 0){
-				userRoleService.insertUserRole(userRoleList,userId);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
+			TAirshuttleUserRole userRole = new TAirshuttleUserRole();
+			userRole.setUserId(userId);
+			userRole.setRoleId(roleId);
+			userRoleList.add(userRole);
+		}
+		
+		if(userRoleList.size() > 0){
+			userRoleService.insertUserRole(userRoleList,userId);
 		}
 
 		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
@@ -115,22 +105,11 @@ public class RoleController extends BaseController{
 			* <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Post("/insertRoleResc")
-	public String insertRoleResc(@Param("roleId") Integer roleId,@Param("rescIds") List<String> rescIds){
+	public String insertRoleResc(@Param("roleId") Integer roleId,@Param("rescIds") List<String> rescIds) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
-		
-		try {
-			
-			//先删除关联，然后再插入
-			roleRescService.insertRoleResc(roleId, rescIds);
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
-		
-		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
+		//先删除关联，然后再插入
+		roleRescService.insertRoleResc(roleId, rescIds);
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject("插入成功"));
 	}
 	
 	/***
@@ -144,19 +123,10 @@ public class RoleController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Get("/searchRoleSelectResc")
-	public String searchRoleSelectResc(@Param("roleId") Integer roleId){
-		ResponseObject ro = new ResponseObject();
-		
-		try {
+	public String searchRoleSelectResc(@Param("roleId") Integer roleId) throws Exception{
 			
-			List<String> rescIdsList = roleRescDAO.getRescByRoleId(roleId);
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(rescIdsList));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
+		List<String> rescIdsList = roleRescDAO.getRescByRoleId(roleId);
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(rescIdsList));
 	}
 	
 	/***
@@ -170,7 +140,7 @@ public class RoleController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Get("/queryRoleList")
-	public String queryRoleList(@Param("rows") final Integer pageSize,@Param("page") final Integer pageNumber){
+	public String queryRoleList(@Param("rows") final Integer pageSize,@Param("page") final Integer pageNumber) throws Exception{
 
 		Page<TAirshuttleRole> page =  roleService.getPageByParam(null,pageNumber, pageSize);
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
@@ -192,7 +162,7 @@ public class RoleController extends BaseController{
 	 */
 	@Get("/queryRoleListByUserId")
 	public String queryRoleListByUserId(@Param("userId") Integer userId,@Param("pageSize") Integer pageSize,
-			@Param("curPageNum") Integer curPageNum){
+			@Param("curPageNum") Integer curPageNum) throws Exception{
 
 		List<TAirshuttleRole> list =  this.roleDAO.getByParam(null,null, null);
 		
@@ -230,35 +200,25 @@ public class RoleController extends BaseController{
 	 */
 	@Get("/searchRoleByName")
 	public String searchRoleByName(@Param("rolename") String rolename,@Param("pageSize") Integer pageSize,
-			@Param("curPageNum") Integer curPageNum){
+			@Param("curPageNum") Integer curPageNum) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
-		
-		try {
-			if(rolename == null || rolename.equals("") ){
+		if(rolename == null || rolename.equals("") ){
 
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名不能为空"));
-			}
-			
-			TAirshuttleRole role = new TAirshuttleRole();
-			role.setName("%"+rolename+"%");
-			Page<TAirshuttleRole> page =  roleService.getPageByParam(role,curPageNum, pageSize);
-			HashMap<String,Object> hashmap = new HashMap<String,Object>();
-			if(page != null){
-				
-				hashmap.put("total", page.getTotalCount());//总行数
-				hashmap.put("rows", page.getItems());
-				return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(hashmap));
-			}
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名不能为空"));
 		}
+		
+		TAirshuttleRole role = new TAirshuttleRole();
+		role.setName("%"+rolename+"%");
+		Page<TAirshuttleRole> page =  roleService.getPageByParam(role,curPageNum, pageSize);
+		HashMap<String,Object> hashmap = new HashMap<String,Object>();
+		if(page != null){
+			
+			hashmap.put("total", page.getTotalCount());//总行数
+			hashmap.put("rows", page.getItems());
+			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(hashmap));
+		}
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
 	}
 	
 	/***
@@ -272,94 +232,76 @@ public class RoleController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Post("/insertRole")
-	public String insertRole(Invocation inv,@Param("rolename") String rolename,@Param("description") String description){
+	public String insertRole(Invocation inv,@Param("rolename") String rolename,@Param("description") String description) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
 		TAirshuttleRole role = new TAirshuttleRole();
-		try {
-			HttpSession session = inv.getRequest().getSession();
-			TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
-			Integer curUserId = sessionUser == null ? null : sessionUser.getId();
+		HttpSession session = inv.getRequest().getSession();
+		TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+		Integer curUserId = sessionUser == null ? null : sessionUser.getId();
 
-			if(rolename == null || rolename.equals("") ){
+		if(rolename == null || rolename.equals("") ){
 
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名不能为空"));
-			}
-			
-			TAirshuttleRole roleSearch = new TAirshuttleRole();
-			roleSearch.setName(rolename);
-			
-			if(roleDAO.vertifyExistsRoleName(roleSearch) > 0){
-				
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名称已经存在"));
-			}
-			
-			role.setName(rolename);
-			if(description != null && !description.equals("")){
-				
-				role.setDescription(description);
-			}
-			
-			role.setCreatePerson(curUserId);
-			role.setModifyPerson(curUserId);
-			roleDAO.insert(role);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名不能为空"));
 		}
-
+		
+		TAirshuttleRole roleSearch = new TAirshuttleRole();
+		roleSearch.setName(rolename);
+		
+		if(roleDAO.vertifyExistsRoleName(roleSearch) > 0){
+			
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名称已经存在"));
+		}
+		
+		role.setName(rolename);
+		if(description != null && !description.equals("")){
+			
+			role.setDescription(description);
+		}
+		
+		role.setCreatePerson(curUserId);
+		role.setModifyPerson(curUserId);
+		roleDAO.insert(role);
+			
 		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
 	}
 	
 	@Post("/updateRole")
 	public String updateRoleById(Invocation inv,@Param("roleId") Integer roleId,@Param("rolename") String rolename,
-			@Param("description") String description){
+			@Param("description") String description) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
 		TAirshuttleRole role = new TAirshuttleRole();
-		try {
 			
-			HttpSession session = inv.getRequest().getSession();
-			TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
-			Integer curUserId = sessionUser == null ? null : sessionUser.getId();
+		HttpSession session = inv.getRequest().getSession();
+		TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+		Integer curUserId = sessionUser == null ? null : sessionUser.getId();
+		
+		if(rolename == null || rolename.equals("") ){
 			
-			if(rolename == null || rolename.equals("") ){
-				
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名不能为空"));
-			}
-			
-			
-			role.setId(roleId);
-			role.setName(rolename);
-			
-			TAirshuttleRole roleSearch = new TAirshuttleRole();
-			roleSearch.setId(roleId);
-			roleSearch.setName(rolename);
-			
-			if(roleDAO.vertifyExistsRoleName(roleSearch) > 0){
-				
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名称已经存在"));
-			}
-			
-			if(description != null && !description.equals("")){
-
-				role.setDescription(description);
-			}
-			role.setModifyPerson(curUserId);
-			
-			roleDAO.updateByParam(role);
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(role));
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名不能为空"));
 		}
+		
+		
+		role.setId(roleId);
+		role.setName(rolename);
+		
+		TAirshuttleRole roleSearch = new TAirshuttleRole();
+		roleSearch.setId(roleId);
+		roleSearch.setName(rolename);
+		
+		if(roleDAO.vertifyExistsRoleName(roleSearch) > 0){
+			
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("角色名称已经存在"));
+		}
+		
+		if(description != null && !description.equals("")){
+
+			role.setDescription(description);
+		}
+		role.setModifyPerson(curUserId);
+		
+		roleDAO.updateByParam(role);
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(role));
 	}
 	
 	/***
@@ -373,19 +315,10 @@ public class RoleController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Post("/deleteRoleByRoleIds")
-	public String deleteRoleByRoleIds(@Param("roleIds") List<Integer> roleIds){
+	public String deleteRoleByRoleIds(@Param("roleIds") List<Integer> roleIds) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
-		try {
 			
-			roleService.deleteRole(roleIds);;
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
-
+		roleService.deleteRole(roleIds);;
 		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject("SUCCESS"));
 	}
 }

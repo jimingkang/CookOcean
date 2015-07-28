@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.Gson;
 import com.topshare.airshuttle.common.util.ConstantsUtil;
 import com.topshare.airshuttle.common.util.IdTool;
+import com.topshare.airshuttle.common.util.ResponseObject;
 import com.topshare.airshuttle.controllers.BaseController;
 import com.topshare.airshuttle.dao.userManager.RescDAO;
 import com.topshare.airshuttle.dao.userManager.RoleRescDAO;
@@ -58,29 +59,21 @@ public class RescController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Get("/vertifyExistsRescName")
-	public String vertifyExistsRescName(@Param("resId") String resId,@Param("rescName") String rescName){
+	public String vertifyExistsRescName(@Param("resId") String resId,@Param("rescName") String rescName) throws Exception{
 		
 		ResponseObject ro = new ResponseObject();
 		
-		try {
-			
-			TAirshuttleResc searchResc = new TAirshuttleResc();
-			
-			searchResc.setId(resId);
-			searchResc.setName(rescName);
-			if(rescDAO.vertifyExistsRescName(searchResc) > 0){
-				ro.setSuccess(false);
-				ro.setErrorMessage("资源名重复");
-				return "@"+this.returnObjectToJson(ro);
-			}
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
-		} catch (Exception e) {
-			e.printStackTrace();
+		TAirshuttleResc searchResc = new TAirshuttleResc();
+		
+		searchResc.setId(resId);
+		searchResc.setName(rescName);
+		if(rescDAO.vertifyExistsRescName(searchResc) > 0){
 			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
+			ro.setErrorMessage("资源名重复");
 			return "@"+this.returnObjectToJson(ro);
 		}
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
 	}
 	
 	/***
@@ -94,7 +87,7 @@ public class RescController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Get("/createResId")
-	public String createResId(){
+	public String createResId() throws Exception{
 		
 		String resId = IdTool.getId();
 		return "@"+resId;
@@ -111,7 +104,7 @@ public class RescController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Get("/selectchildLevelResByUserId")
-	public String selectchildLevelResByUserId(Invocation inv,@Param("parentId") String parentId,@Param("belong") Integer belong){
+	public String selectchildLevelResByUserId(Invocation inv,@Param("parentId") String parentId,@Param("belong") Integer belong) throws Exception{
 		
 		HttpSession session = inv.getRequest().getSession();
 		TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
@@ -140,7 +133,7 @@ public class RescController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Get("/selectAllResNodeByRoleId")
-	public String selectAllResNodeByRoleId(@Param("id") String id,@Param("roleId") Integer roleId,@Param("belong") Integer belong){
+	public String selectAllResNodeByRoleId(@Param("id") String id,@Param("roleId") Integer roleId,@Param("belong") Integer belong) throws Exception{
 		
 		if(id == null){
 			
@@ -154,7 +147,7 @@ public class RescController extends BaseController{
 		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(getNodes(id,roleRescList,belong)));
 	}
 	
-	public List<Map<String,String>> getNodes(String parentRescId,List<String> roleRescList,Integer belong){
+	public List<Map<String,String>> getNodes(String parentRescId,List<String> roleRescList,Integer belong) throws Exception{
 		List<Map<String,String>> showMapData = new ArrayList<Map<String,String>>();
 		List<TAirshuttleResc> rescList = rescDAO.selectchildLevelRes(parentRescId,belong);
 		for(TAirshuttleResc resc : rescList){
@@ -230,67 +223,51 @@ public class RescController extends BaseController{
 	}
 	
 	@Post("/insertResc")
-	public String insertResc(Invocation inv,TAirshuttleResc resc){
+	public String insertResc(Invocation inv,TAirshuttleResc resc) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
-		try {
-			HttpSession session = inv.getRequest().getSession();
-			TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+		HttpSession session = inv.getRequest().getSession();
+		TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+		
+		Integer createPerson = sessionUser == null ? null : sessionUser.getId();
+		
+		if(resc.getName() == null || resc.getName().equals("") || resc.getUri() == null || resc.getUri().equals("") ||
+		   resc.getUriCustomer() == null || resc.getUriCustomer().equals("") ||
+		   resc.getNodeOrder() == null){
 			
-			Integer createPerson = sessionUser == null ? null : sessionUser.getId();
-			
-			if(resc.getName() == null || resc.getName().equals("") || resc.getUri() == null || resc.getUri().equals("") ||
-			   resc.getUriCustomer() == null || resc.getUriCustomer().equals("") ||
-			   resc.getNodeOrder() == null){
-				
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("资源名，uri，排序，页面自定义显示 不能为空"));
-			}
-			
-			Date curDate = new Date();
-			resc.setCreatePerson(createPerson);
-			resc.setModifyPerson(createPerson);
-			resc.setCreateTime(curDate);
-			resc.setModifyTime(curDate);
-			
-			rescDAO.insert(resc);
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(resc));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("资源名，uri，排序，页面自定义显示 不能为空"));
 		}
+		
+		Date curDate = new Date();
+		resc.setCreatePerson(createPerson);
+		resc.setModifyPerson(createPerson);
+		resc.setCreateTime(curDate);
+		resc.setModifyTime(curDate);
+		
+		rescDAO.insert(resc);
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(resc));
 	}
 	
 	@Post("/updateResc")
-	public String updateResc(Invocation inv,TAirshuttleResc resc){
+	public String updateResc(Invocation inv,TAirshuttleResc resc) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
-		try {
-			HttpSession session = inv.getRequest().getSession();
-			TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+		HttpSession session = inv.getRequest().getSession();
+		TAirshuttleUser sessionUser = (TAirshuttleUser) session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
 
-			Integer createPerson = sessionUser == null ? null :sessionUser.getId();
+		Integer createPerson = sessionUser == null ? null :sessionUser.getId();
+		
+		if(resc.getName() == null || resc.getName().equals("") || resc.getUri() == null || resc.getUri().equals("") ||
+				   resc.getUriCustomer() == null || resc.getUriCustomer().equals("") ||
+				   resc.getNodeOrder() == null){
 			
-			if(resc.getName() == null || resc.getName().equals("") || resc.getUri() == null || resc.getUri().equals("") ||
-					   resc.getUriCustomer() == null || resc.getUriCustomer().equals("") ||
-					   resc.getNodeOrder() == null){
-				
-				return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("资源名，uri，排序，页面自定义显示 不能为空"));
-			}
-			
-			resc.setModifyPerson(createPerson);
-			
-			rescDAO.updateByParam(resc);
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(resc));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
+			return "@"+this.returnObjectToJson(ResponseObject.newErrorResponseObject("资源名，uri，排序，页面自定义显示 不能为空"));
 		}
+		
+		resc.setModifyPerson(createPerson);
+		
+		rescDAO.updateByParam(resc);
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(resc));
 	}
 	
 	/***
@@ -304,18 +281,9 @@ public class RescController extends BaseController{
 	 * <p>修改历史 ：(修改人，修改时间，修改原因/内容)</p>
 	 */
 	@Post("/deleteRescByIds")
-	public String deleteRescByIds(@Param("resIds") List<String> resIds){
-		
-		ResponseObject ro = new ResponseObject();
-		try {
+	public String deleteRescByIds(@Param("resIds") List<String> resIds) throws Exception{
 			
-			rescService.deleteResc(resIds);
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
+		rescService.deleteResc(resIds);
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(null));
 	}
 }
