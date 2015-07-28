@@ -7,6 +7,8 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.topshare.airshuttle.common.util.Constants;
+
 
 
 /***
@@ -23,10 +25,10 @@ public class BaseTransService {
 		DataSource instance = instances.get(DATASOURCE_KEY);
 		if (instance == null) {
 			DriverManagerDataSource dataSource = new DriverManagerDataSource();
-			dataSource.setDriverClassName("import com.topshare.airshuttle.model.userManager.User;");
-			dataSource.setUrl("jdbc:mysql://127.0.0.1:3306/jade?useUnicode=true&amp;characterEncoding=utf-8");
-			dataSource.setUsername("root");
-			dataSource.setPassword("123456");
+			dataSource.setDriverClassName(Constants.DRIVER_CLASS_NAME);
+			dataSource.setUrl(Constants.URL);
+			dataSource.setUsername(Constants.USERNAME);
+			dataSource.setPassword(Constants.PASSWORD);
 			instance = dataSource;
 			instances.put(DATASOURCE_KEY, instance);
 		}

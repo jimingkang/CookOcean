@@ -21,6 +21,9 @@ public interface RoleDAO {
 	@SQL("select count(ID) from t_airshuttle_role #if(:u != null && :u.name != null){where name like :u.name }")
 	public Integer getCountByParam(@SQLParam("u") TAirshuttleRole role);
 	
+	@SQL("SELECT r.NAME FROM t_airshuttle_role r "
+		+ " WHERE r.ID IN (SELECT ur.ROLE_ID FROM t_airshuttle_user_role ur WHERE ur.USER_ID = :userId)")
+	public List<String> getByUserId(@SQLParam("userId") Integer userId);
 	
 	@SQL("select ID, DESCRIPTION, NAME, CREATE_PERSON, CREATE_TIME, MODIFY_PERSON, MODIFY_TIME "
 			+ " from t_airshuttle_role #if(:u != null && :u.name != null){where name like :u.name } "
