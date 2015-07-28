@@ -7,7 +7,7 @@ update  t_airshuttle_driver set driving_license_url='http://car0.autoimg.cn/uplo
 select * from t_airshuttle_driver_car;
 insert into t_airshuttle_book_driver_process(book_driver_id, review_process_id,process_result_desc) select id,1,'driver accept ' from t_airshuttle_user_book_driver where id>=1;
 select * from t_airshuttle_user_book_driver;
-update t_airshuttle_user_book_driver set book_price=10 where id>1;
+update t_airshuttle_user_book_driver set user_id=1 where id>1;
 update t_airshuttle_reception_air set price=10 where id>1; 
 
 select au.book_time, au.user_id, au.driver_id, au.book_price,au.book_number_person, au.pick_up_time, au.status,ar.reception_city, ar.reception_school, ar.reception_airport from t_airshuttle_user_book_driver au left join t_airshuttle_reception_air ar on(au.reception_air_id =ar.id)   
@@ -17,7 +17,7 @@ where au.user_id=1 limit 1,3;
 select * from  t_airshuttle_book_driver_process;
 
 delete from   t_airshuttle_user_book_driver where id>=1;
-delete from   t_airshuttle_book_driver_process where id>=1;
+delete from   t_airshuttle_book_driver_process where id>=30;
 update  t_airshuttle_order set user_id=1 where id>=1;
  
 select *  from   t_airshuttle_book_driver_process where id>=1;
