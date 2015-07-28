@@ -36,70 +36,41 @@ public class MyCollectionController extends BaseController {
 	 * @param inv
 	 * @return
 	 */
-	public String listByType(Invocation inv,TAirshuttleMyCollection myCollection,@Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber){
+	public String listByType(Invocation inv,TAirshuttleMyCollection myCollection,
+			@Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
+		Integer curUserId = this.getCurUserId(inv);
+		myCollection.setUserId(curUserId);
 		
-		try {
-			
-			Integer curUserId = this.getCurUserId(inv);
-			myCollection.setUserId(curUserId);
-			
-			Page<TAirshuttleMyCollection>  myCollectionPage = myCollectionService.getPageByParam(myCollection , pageNumber, pageSize);
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(myCollectionPage));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
+		Page<TAirshuttleMyCollection>  myCollectionPage = myCollectionService.getPageByParam(myCollection , pageNumber, pageSize);
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject(myCollectionPage));
 	}
 	
 	/***
 	 * 新增我的收藏
 	 * @return
 	 */
-	public String addMyCollection(Invocation inv,TAirshuttleMyCollection myCollection){
+	public String addMyCollection(Invocation inv,TAirshuttleMyCollection myCollection) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
+		Integer curUserId = this.getCurUserId(inv);
+		myCollection.setUserId(curUserId);
 		
-		try {
-			
-			Integer curUserId = this.getCurUserId(inv);
-			myCollection.setUserId(curUserId);
-			
-			myCollectionDAO.insert(myCollection);
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject("添加成功"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
+		myCollectionDAO.insert(myCollection);
+		
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject("添加成功"));
 	}
 	
 	/***
 	 * 删除我的收藏
 	 * @return
 	 */
-	public String deleteByParam(Invocation inv,TAirshuttleMyCollection myCollection){
+	public String deleteByParam(Invocation inv,TAirshuttleMyCollection myCollection) throws Exception{
 		
-		ResponseObject ro = new ResponseObject();
+		Integer curUserId = this.getCurUserId(inv);
+		myCollection.setUserId(curUserId);
+		myCollectionDAO.deleteByParam(myCollection);
 		
-		try {
-			
-			Integer curUserId = this.getCurUserId(inv);
-			myCollection.setUserId(curUserId);
-			myCollectionDAO.deleteByParam(myCollection);
-			
-			return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject("添加成功"));
-		} catch (Exception e) {
-			e.printStackTrace();
-			ro.setSuccess(false);
-			ro.setErrorMessage("系统出现异常，请稍候再试");
-			return "@"+this.returnObjectToJson(ro);
-		}
+		return "@"+this.returnObjectToJson(ResponseObject.newSuccessResponseObject("添加成功"));
 	}
 }
