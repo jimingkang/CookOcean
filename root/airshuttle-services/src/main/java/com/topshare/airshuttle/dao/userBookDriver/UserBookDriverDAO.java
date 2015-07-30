@@ -35,6 +35,18 @@ public interface UserBookDriverDAO {
 	public List<TAirshuttleUserBookDriver> getByParam(@SQLParam("d") TAirshuttleUserBookDriver tAirshuttleUserBookDriver,@SQLParam("pageNumber") int pageNumber,@SQLParam("pageSize")  int pageSize);
 
 
+	
+	@SQL("select ar.reception_city, ar.reception_school, ap.id bookDriverProcessId , ap.review_process_id, ap.process_result_desc, ap.MODIFY_TIME, au.id, au.book_time, au.user_id, au.driver_id, au.book_price,au.book_number_person, au.pick_up_time, au.status,au.reception_air_id "
+			+ " from t_airshuttle_reception_air ar  "
+			+ " inner join t_airshuttle_user_book_driver au on(ar.id=au.reception_air_id )  "
+			+ " inner join  t_airshuttle_book_driver_process ap on(au.id=ap.book_driver_id)"
+			+ " #if(:d.id != null){where au.id=:d.id } "
+			+ " and (ap.book_driver_id, ap.review_process_id) "
+			+" in (select  app.book_driver_id, max(app.review_process_id)  from t_airshuttle_book_driver_process app"
+			+ " group by app.book_driver_id) "
+			+ " limit :pageNumber,:pageSize")
+	public List<TAirshuttleUserBookDriver> getBybookid(@SQLParam("d") TAirshuttleUserBookDriver tAirshuttleUserBookDriver,@SQLParam("pageNumber") int pageNumber,@SQLParam("pageSize")  int pageSize);
+
 	@SQL("select ar.reception_city, ar.reception_school, ap.id bookDriverProcessId , ap.review_process_id, ap.process_result_desc, ap.MODIFY_TIME, au.id, au.book_time, au.user_id, au.driver_id, au.book_price,au.book_number_person, au.pick_up_time, au.status"
 			+ " from t_airshuttle_reception_air ar  "
 			+ " inner join t_airshuttle_user_book_driver au on(ar.id=au.reception_air_id )  "

@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.topshare.airshuttle.common.util.Page;
 import com.topshare.airshuttle.common.util.ResponseObject;
+import com.topshare.airshuttle.dao.bookDriverProcess.BookDriverProcessDAO;
+import com.topshare.airshuttle.model.bookDriverProcess.TAirshuttleBookDriverProcess;
 import com.topshare.airshuttle.model.driver.TAirshuttleDriver;
 import com.topshare.airshuttle.model.receptionAir.TAirshuttleReceptionAir;
 import com.topshare.airshuttle.model.userBookDriver.TAirshuttleUserBookDriver;
@@ -27,6 +29,8 @@ public class BookDriverController extends BaseController {
 
 	@Autowired
 	private UserBookDriverService userBookDriverService;
+	@Autowired
+	private BookDriverProcessDAO bookDriverProcessDAO;
 
 	@Autowired
 	private DriverService driverService;
@@ -36,8 +40,12 @@ public class BookDriverController extends BaseController {
 	@Get("/finddriver")
 	public String findDriver(Invocation inv,
 			TAirshuttleDriver tAirshuttleDriver,
-			@Param("pageSize") final Integer pageSize,
-			@Param("pageNumber") final Integer pageNumber) throws Exception{
+			@Param("pageSize")  Integer pageSize,
+			@Param("pageNumber")  Integer pageNumber) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 		// int
 		// pageNumber=Integer.parseInt(inv.getRequest().getParameter("pageNumber"));
 		// int
@@ -62,8 +70,12 @@ public class BookDriverController extends BaseController {
 	@Get("/findReceptionAir")
 	public String findReceptionAir(Invocation inv,
 			@Param("receptionSchool") String receptionSchool,
-			@Param("pageSize") final Integer pageSize,
-			@Param("pageNumber") final Integer pageNumber) throws Exception{
+			@Param("pageSize")  Integer pageSize,
+			@Param("pageNumber")  Integer pageNumber) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 		System.out.println("-------------jimmy test: " + receptionSchool);
 		ResponseObject ro = new ResponseObject();
 		TAirshuttleReceptionAir tAirshuttleReceptionAir = new TAirshuttleReceptionAir();
@@ -83,9 +95,12 @@ public class BookDriverController extends BaseController {
 	@Get("/updateuserbookdriver")
 	public String updateUserBookDriver(Invocation inv, Model model,
 			TAirshuttleUserBookDriver tAirshuttleUserBookDriver,
-			@Param("pageSize") final Integer pageSize,
-			@Param("pageNumber") final Integer pageNumber) throws Exception{
-
+			@Param("pageSize")  Integer pageSize,
+			@Param("pageNumber")  Integer pageNumber) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 		ResponseObject ro = new ResponseObject();
 		// TAirshuttleUserBookDriver tAirshuttleUserBookDriver = new
 		// TAirshuttleUserBookDriver();
@@ -109,17 +124,56 @@ public class BookDriverController extends BaseController {
 
 		return "bookdriver/userbookdriverinfo";
 	}
-
-	@Get("/insertuserbookdriver")
-	public String insertUserBookDriver(Model model, Invocation inv,
-			TAirshuttleUserBookDriver tAirshuttleUserBookDriver,
-			@Param("pageSize") final Integer pageSize,
-			@Param("pageNumber") final Integer pageNumber) throws Exception{
-
+	@Get("/driverconsesus")
+	public String updateUserBookDriverConsesus(Model model, Invocation inv,
+			TAirshuttleBookDriverProcess tAirshuttleBookDriverProcess,
+			@Param("pageSize")  Integer pageSize,
+			@Param("pageNumber")  Integer pageNumber) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 		// TAirshuttleUserBookDriver tAirshuttleUserBookDriver = new
 		// TAirshuttleUserBookDriver();
 
 		HttpSession session = inv.getRequest().getSession();
+
+		SimpleDateFormat sp = sp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		// sp.parse(expirationDate);
+		Date curDate = new Date();
+
+		//tAirshuttleUserBookDriver.setCreateTime(curDate);
+		// tAirshuttleUserBookDriver.setPickUpTime(pickUpTime);
+
+		Integer id = bookDriverProcessDAO.insertConcesus(tAirshuttleBookDriverProcess);
+
+		TAirshuttleUserBookDriver tAirshuttleUserBookDriver=new TAirshuttleUserBookDriver();
+		tAirshuttleUserBookDriver.setId(tAirshuttleBookDriverProcess.getBookDriverId());
+		Page<TAirshuttleUserBookDriver> page = userBookDriverService
+				.getBybookid(tAirshuttleUserBookDriver, pageNumber, pageSize);
+		model.add("rows", page.getItems() == null ? "" : page.getItems());
+		model.add("total", page.getTotalCount());
+		return "bookdriver/userbookdriverinfo";
+	}
+
+	@Get("/insertuserbookdriver")
+	public String insertUserBookDriver(Model model, Invocation inv,
+			TAirshuttleUserBookDriver tAirshuttleUserBookDriver,
+			@Param("pageSize")  Integer pageSize,
+			@Param("pageNumber")  Integer pageNumber) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
+		// TAirshuttleUserBookDriver tAirshuttleUserBookDriver = new
+		// TAirshuttleUserBookDriver();
+
+		//HttpSession session = inv.getRequest().getSession();
+		Integer curUserId = this.getCurUserId(inv);
+		if(curUserId==null)
+			curUserId=1;
+		tAirshuttleUserBookDriver.setUserId(curUserId);
 
 		SimpleDateFormat sp = sp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -143,9 +197,12 @@ public class BookDriverController extends BaseController {
 	@Get("/finduserbookdriver")
 	public String findUserBookDriver(Invocation inv, Model model,
 			TAirshuttleUserBookDriver tAirshuttleUserBookDriver,
-			@Param("pageSize") final Integer pageSize,
-			@Param("pageNumber") final Integer pageNumber) throws Exception{
-
+			@Param("pageSize")  Integer pageSize,
+			@Param("pageNumber")  Integer pageNumber) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 		ResponseObject ro = new ResponseObject();
 
 		// System.out.println("jimmy  userId:"+userId);

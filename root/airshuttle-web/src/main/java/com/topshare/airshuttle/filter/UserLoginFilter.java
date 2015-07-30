@@ -110,23 +110,23 @@ public class UserLoginFilter implements Filter {
 
 		}else{
 			//非登陆显示页面，请放到非view文件夹外
-			if(uri.contains("/front/")){
-				chain.doFilter(request, response);
-				return;
-			}else{
-				User user = (User)session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
-				//跳转到登录页面
-				if(user == null){
-					
-					hresponse.sendRedirect(hrequest.getContextPath()+"/index.jsp");
-					return;
-				}else{
-					//校验请求合法性
-					//TODO
-					chain.doFilter(request, response);
-					return;
-				}
-			}
+//			if(uri.contains("/front/")){
+//				chain.doFilter(request, response);
+//				return;
+//			}else{
+//				User user = (User)session.getAttribute(ConstantsUtil.SESSION_USER_ATTRIBUTE_KEY);
+//				//跳转到登录页面
+//				if(user == null){
+//					
+//					hresponse.sendRedirect(hrequest.getContextPath()+"/index.jsp");
+//					return;
+//				}else{
+//					//校验请求合法性
+//					//TODO
+//					chain.doFilter(request, response);
+//					return;
+//				}
+//			}
 		}
 		
 	}

@@ -3,6 +3,7 @@ package com.topshare.airshuttle.controllers;
 import javax.servlet.http.HttpSession;
 
 import net.paoding.rose.web.Invocation;
+import net.paoding.rose.web.annotation.Param;
 
 import com.google.gson.Gson;
 import com.topshare.airshuttle.common.util.ConstantsUtil;
@@ -10,6 +11,8 @@ import com.topshare.airshuttle.model.userManager.TAirshuttleUser;
 
 
 public class BaseController {
+	public Integer pageSize=10;
+	public Integer pageNumber=1;
 
 	/***
 	 * 将json信息发送给前台展现

@@ -21,6 +21,7 @@ import com.topshare.airshuttle.service.myCollection.MyCollectionService;
  */
 @Path("/myCollection")
 public class MyCollectionController extends BaseController {
+	
 
 	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger(this.getClass());

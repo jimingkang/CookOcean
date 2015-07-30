@@ -19,8 +19,13 @@ public interface BookDriverProcessDAO {
 	@ReturnGeneratedKeys
 	@SQL("insert into t_airshuttle_book_driver_process (book_driver_id, review_process_id,"
 			+ "process_result_desc, create_time)"
-			+ "values(:d.bookDriverId,:d.status,:d.processResultDesc,now())")
+			+ "values(:d.bookDriverId,:d.reviewProcessId,:d.processResultDesc,now())")
 	public Integer insert(@SQLParam("d") TAirshuttleBookDriverProcess t);
+	@ReturnGeneratedKeys
+	@SQL("insert into t_airshuttle_book_driver_process (book_driver_id, review_process_id,"
+			+ "process_result_desc, MODIFY_TIME)"
+			+ "values(:d.bookDriverId,:d.reviewProcessId,'driver Concesus',now())")
+	public Integer insertConcesus(@SQLParam("d") TAirshuttleBookDriverProcess t);
 	
 	@ReturnGeneratedKeys
 	@SQL("select  id, book_driver_id, review_process_id, process_result_desc, create_time, MODIFY_TIME from t_airshuttle_book_driver_process "

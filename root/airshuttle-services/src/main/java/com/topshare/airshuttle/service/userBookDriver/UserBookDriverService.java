@@ -37,6 +37,26 @@ public class UserBookDriverService {
     	return new Page<TAirshuttleUserBookDriver>(list, totalCount, pageSize, pageNumber);
 	}
 	
+	public Page<TAirshuttleUserBookDriver> getBybookid(
+			TAirshuttleUserBookDriver tAirshuttleUserBookDriver, Integer pageNumber,
+			Integer pageSize) {
+		Integer totalCount = userBookDriverDAO.getCountByParam(tAirshuttleUserBookDriver);
+		
+		List<TAirshuttleUserBookDriver> list = null;
+    	if(pageSize==null)
+    		pageSize=5;
+    	if (pageNumber==null)
+    		pageNumber=1;
+    	int offset = (pageNumber - 1) * pageSize; // 起始下标
+    	offset = offset > 0 ? offset : 0;
+		offset = offset < totalCount ? offset : totalCount;
+		
+    	if(totalCount > 0){
+    		list =  this.userBookDriverDAO.getBybookid(tAirshuttleUserBookDriver, offset, pageSize);
+    	}
+    	
+    	return new Page<TAirshuttleUserBookDriver>(list, totalCount, pageSize, pageNumber);
+	}
 	
     	
 	public Integer insert(TAirshuttleUserBookDriver tAirshuttleUserBookDriver) {
@@ -46,6 +66,7 @@ public class UserBookDriverService {
 		
 		 Integer id=userBookDriverDAO.insert(tAirshuttleUserBookDriver);
 		 tAirshuttleUserBookDriver.setId(id);
+		 tAirshuttleUserBookDriver.setReviewProcessId(0);
 		 bookDriverProcessDAO.insert(tAirshuttleUserBookDriver);
 		 return id;
 	}

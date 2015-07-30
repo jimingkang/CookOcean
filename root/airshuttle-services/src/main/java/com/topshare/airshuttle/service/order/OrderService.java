@@ -66,7 +66,7 @@ public class OrderService {
 		 
 		 System.out.println("tAirshuttleUserBookDriver jimmy :" + tAirshuttleUserBookDriver.getId());
 		 tAirshuttleUserBookDriver.setReviewProcessId(3);          //3 mean  alipay   pay successfully
-		 bookDriverProcessDAO.insert(tAirshuttleUserBookDriver);  //用tAirshuttleUserBookDriver 去插入bookDriverProcess
+		// bookDriverProcessDAO.insert(tAirshuttleUserBookDriver);  //用tAirshuttleUserBookDriver 去插入bookDriverProcess
 		 tAirshuttleOrder.setReviewProcessId(Integer.valueOf(3));  //3  prepay successfully waiting for xieyun commit
 		return orderProcessDAO.insertAfterailpayFeedBack(tAirshuttleOrder);
 		

@@ -43,13 +43,18 @@ public class OrderController extends BaseController {
 	
 
 	@Get("/findorder")
-	public String findOrder(Invocation inv,TAirshuttleOrder tAirshuttleOrder,@Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
+	public String findOrder(Invocation inv,TAirshuttleOrder tAirshuttleOrder,@Param("pageSize")  Integer pageSize,@Param("pageNumber")  Integer pageNumber
 			) throws Exception{
 		//int pageNumber=Integer.parseInt(inv.getRequest().getParameter("pageNumber"));
 		//int pageSize=Integer.parseInt(inv.getRequest().getParameter("pageSize"));
 		//orderService.getByParamCity(tAirshuttletAirshuttleOrder, pageNumber,  pageSize);
 		ResponseObject ro = new ResponseObject();
 		//TAirshuttleUser user = new TAirshuttleUser();
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
+		
 			
 		Page<TAirshuttleOrder> page = orderService.getByUserId(tAirshuttleOrder, pageNumber, pageSize);
 
@@ -64,10 +69,13 @@ public class OrderController extends BaseController {
 	@Get("/updateorder")
 	public String updateOrder(Invocation inv,Model model,TAirshuttleOrder tAirshuttleOrder,
 
-@Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
+@Param("pageSize")  Integer pageSize,@Param("pageNumber")  Integer pageNumber
 		
 			) throws Exception{
-		
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 			
 		HttpSession session = inv.getRequest().getSession();
 		
@@ -108,6 +116,8 @@ public class OrderController extends BaseController {
 			//乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
 			//valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
 			params.put(name, valueStr);
+			
+			System.out.println("test notify : name ="+name+" value:"+valueStr);
 		}
 		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
@@ -287,11 +297,14 @@ public class OrderController extends BaseController {
 		inv.getResponse().getWriter().println(sHtmlText);
 	}
 	@Get("/insertorder")
-	public String insertOrder(Model model,Invocation inv,TAirshuttleOrder tAirshuttleOrder, @Param("pageSize") final Integer pageSize,@Param("pageNumber") final Integer pageNumber
+	public String insertOrder(Model model,Invocation inv,TAirshuttleOrder tAirshuttleOrder, @Param("pageSize")  Integer pageSize,@Param("pageNumber")  Integer pageNumber
 		
 			) throws Exception{
 		
-			
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
 		HttpSession session = inv.getRequest().getSession();
 
 		SimpleDateFormat  sp=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -304,7 +317,7 @@ public class OrderController extends BaseController {
 		
 		Integer id = orderService.insert(tAirshuttleOrder);
 		
-		tAirshuttleOrder.setId(id);
+		//tAirshuttleOrder.setId(id);
 		// Page<TAirshuttleOrder> page= orderService.getByUserId(tAirshuttleOrder, pageNumber, pageSize);
 		// model.add("rows", page.getItems() == null ? "" : page.getItems());
 		// model.add("total", page.getTotalCount());
