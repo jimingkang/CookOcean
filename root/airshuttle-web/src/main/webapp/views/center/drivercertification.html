@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/icons/favorite.ico"/>
+
+    <!-- lib -->
+    <link rel="stylesheet" href="../../scripts/lib/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../scripts/lib/bootstrap-3.3.4/themes/bootswatch.min.css">
+    <link rel="stylesheet" href="../../scripts/lib/fontawesome-4.3.0/css/font-awesome.min.css">
+
+    <!-- plugins -->
+    <link rel="stylesheet" href="../../scripts/plugins/bigautocomplete/jquery.bigautocomplete.css">
+
+    <!-- page's -->
+    <link rel="stylesheet" href="../../styles/center.css">
+
+    <title>海聚吧</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="home.html">海聚吧</a>
+        </div>
+        <ul class="nav navbar-nav  navbar-left">
+            <li>
+                <a href="#">首页</a>
+            </li>
+            <li>
+                <a href="#">拼车</a>
+            </li>
+            <li>
+                <a href="#">大家说</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="login.html">登录</a>
+            </li>
+            <li>
+                <a href="register.html">注册</a>
+            </li>
+            <li>
+                <a href="#"></a>
+            </li>
+        </ul>
+
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row margin-top">
+            <div class="col-lg-2 nav-panel">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" >
+                        <a href="#">
+                            <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:100%;"></a>
+                    </li>
+                    <li role="presentation" class="active">
+                        <a href="#">我的账户</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">我来组团</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">我的参团</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">预约接机</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">我的收藏</a>
+                    </li>
+                    <li>&nbsp;</li>
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <ul class="nav nav-tabs">
+                    <li >
+                        <a href="account.html">基础信息</a>
+                    </li>
+                    <li>
+                        <a href="personal.html">个人隐私</a>
+                    </li>
+                    <li class="active">
+                        <a href="drivercertification.html">身份认证</a>
+                    </li>
+                    <li>
+                        <a href="safety.html">安全设置</a>
+                    </li>
+                </ul>
+
+                <div class="contain-form hide">
+
+                    <div class="form-group">
+                        <button class="btn btn-default">编辑信息</button>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            保障金： <em>￥0.00</em>
+                        </label>
+                        <button class="btn btn-default">缴纳/退还</button>
+                    </div>
+                    <div class="form-group">
+                        <label>车辆照片</label>
+                        <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></div>
+
+                    <p>
+                        <label>行驶证照片</label>
+                        <br>
+                        <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></p>
+                    <p>
+                        <label>驾驶证照片</label>
+                        <br>
+                        <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></p>
+
+                    <p>
+                        <label>真实姓名</label>
+                        <br>王小花</p>
+
+                    <p>
+                        <label>手机</label>
+                        <br>+86 - 139*****090</p>
+
+                </div>
+                <form id="edit-form" class="">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">身份证号</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder=""></div>
+                    <div class="form-group">
+                        <label>真实姓名</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder=""></div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">联系电话</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder=""></div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">车辆参数</label>
+                        <div class="form-inline">
+                            <select name="" id="" class="form-control">
+                                <option>请选择车辆品牌</option>
+                                <option value="1">大众</option>
+                                <option value="1">雷克萨斯</option>
+                                <option value="1">本田</option>
+                                <option value="1">奔驰</option>
+                                <option value="1">奥迪</option>
+                            </select>
+                            <select name="" id="" class="form-control">
+                                <option>请选择车系</option>
+                                <option value="1">甲壳虫</option>
+                                <option value="1">高尔夫</option>
+                                <option value="1">POLO</option>
+                            </select>
+                            <select name="" id="" class="form-control">
+                                <option>请选择车身颜色</option>
+                                <option value="1">红</option>
+                                <option value="1">黄</option>
+                                <option value="1">蓝</option>
+                            </select>
+                            <input class="form-control form-number" type="text" maxlength="3" placeholder="5">
+                            <label for="exampleInputPassword1">个座位</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">车牌号</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder=""></div>
+
+                    <div class="form-group">
+                        <label for="exampleInputFile">车辆照片</label>
+                        <input type="file" id="exampleInputFile">
+                        <p class="help-block">小于等于 800*800px JPG / PNG 格式图片</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">行驶证照片</label>
+                        <input type="file" id="exampleInputFile">
+                        <p class="help-block">小于等于 800*800px JPG / PNG 格式图片</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">驾驶证照片</label>
+                        <input type="file" id="exampleInputFile">
+                        <p class="help-block">小于等于 800*800px JPG / PNG 格式图片</p>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">
+                            我已经阅读并同意
+                            <a href="">《xxx服务协议》</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-default">保存</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- lib -->
+    <script src="../../scripts/lib/jquery-1.11.3/jquery-1.11.3.min.js"></script>
+    <script src="../../scripts/lib/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- plugins -->
+    <script src="../../scripts/plugins/bigautocomplete/jquery.bigautocomplete.js"></script>
+    <script src="../../scripts/plugins/jquery.tmpl.min.js"></script>
+    <script src="../../scripts/plugins/jquery.com.toolkit.js"></script>
+    <script src="../../scripts/plugins/jquery.pagination.js"></script>
+    <script src="../../scripts/plugins/jquery.highlight.js"></script>
+
+    <!-- page's -->
+    <script src="../../scripts/datacontroller/ajaxdatacontroller.js"></script>
+    <script src="../../scripts/datacontroller/keywordcontroller.js"></script>
+    <script src="../../scripts/results.js"></script>
+</body>
+</html>

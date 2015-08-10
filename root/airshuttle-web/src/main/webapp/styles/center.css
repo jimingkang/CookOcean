@@ -1,3 +1,16 @@
-body{
+body,.nav-tabs>li.active>a{
     background-color: #efefef;
+}
+.nav-panel{
+
+    background-color: #fff;
+}
+.margin-top{
+    margin-top: 10px;
+}
+
+
+.form-inline .form-number{
+    width: 50px;
+    text-align: right;
 }

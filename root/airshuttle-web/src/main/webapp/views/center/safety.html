@@ -78,7 +78,7 @@
             </div>
             <div class="col-lg-9">
                 <ul class="nav nav-tabs">
-                    <li  class="active">
+                    <li >
                         <a href="account.html">基础信息</a>
                     </li>
                     <li>
@@ -87,55 +87,57 @@
                     <li>
                         <a href="drivercertification.html">身份认证</a>
                     </li>
-                    <li>
+                    <li  class="active">
                         <a href="safety.html">安全设置</a>
                     </li>
                 </ul>
-                <div class="contain-form">
 
-                    <div class="form-group hide">
-                        <p>
-                            <button for="exampleInputEmail1">编辑信息</button>
-                        </p>
-                        <p>
-                            <label for="exampleInputEmail1">头像</label>
-                            <br>
-                            <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></p>
+                <div class="contain-form hide">
 
-                        <p>
-                            <label for="exampleInputEmail1">邮箱</label>
-                            <br>test@example.com</p>
-                        <p>
-                            <label for="exampleInputEmail1">手机</label>
-                            <br>+86 - 139*****090</p>
+                    <div class="form-group">
+                        <button class="btn btn-default">编辑信息</button>
                     </div>
+                    <div class="form-group">
+                        <label>
+                            保障金： <em>￥0.00</em>
+                        </label>
+                        <button class="btn btn-default">缴纳/退还</button>
+                    </div>
+                    <div class="form-group">
+                        <label>车辆照片</label>
+                        <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></div>
 
-                    <form id="edit-form" class="">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">邮箱</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="username@example.com">
-                            <p class="help-block">邮箱将作为你的登录帐号使用</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">手机号</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="+86-12345678901 ">
-                            <p class="help-block">请输入国家代码及手机号码，手机号码将在验证支付及个人身份时使用</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">头像</label>
-                            <input type="file" id="exampleInputFile">
-                            <p class="help-block">小于等于 200*200px JPG / PNG 格式图片</p>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox">
-                                我已经阅读并同意
-                                <a href="">《xxx服务协议》</a>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-default">保存</button>
-                    </form>
+                    <p>
+                        <label>行驶证照片</label>
+                        <br>
+                        <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></p>
+                    <p>
+                        <label>驾驶证照片</label>
+                        <br>
+                        <img class="img-rounded" src="../../assets/imgs/avatar.png" alt="" style="width:80px;"></p>
+
+                    <p>
+                        <label>真实姓名</label>
+                        <br>王小花</p>
+
+                    <p>
+                        <label>手机</label>
+                        <br>+86 - 139*****090</p>
+
                 </div>
+                <form id="edit-form" class="">
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">旧密码</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder=""></div>
+                    <div class="form-group">
+                        <label>新密码</label>
+                        <input type="password" class="form-control" id="exampleInputEmail1" placeholder=""></div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">确认密码</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder=""></div>
+
+                    <button type="submit" class="btn btn-default">确认</button>
+                </form>
             </div>
         </div>
     </div>
