@@ -1,5 +1,6 @@
 package com.topshare.airshuttle.service.order;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +65,15 @@ public class OrderService {
 		 TAirshuttleUserBookDriver  tAirshuttleUserBookDriver=new TAirshuttleUserBookDriver();
 		 tAirshuttleUserBookDriver.setId(tAirshuttleOrder.getBookId());
 		 
-		 System.out.println("tAirshuttleUserBookDriver jimmy :" + tAirshuttleUserBookDriver.getId());
+		 System.out.println("test alipayfeedback():insertAfterailpayFeedBack() jimmy :" + tAirshuttleUserBookDriver.getId());
 		 tAirshuttleUserBookDriver.setReviewProcessId(3);          //3 mean  alipay   pay successfully
 		// bookDriverProcessDAO.insert(tAirshuttleUserBookDriver);  //用tAirshuttleUserBookDriver 去插入bookDriverProcess
 		 tAirshuttleOrder.setReviewProcessId(Integer.valueOf(3));  //3  prepay successfully waiting for xieyun commit
+		 tAirshuttleOrder.setModifyTime(new Date());
+		// tAirshuttleOrder= orderProcessDAO.getByOrderDesignationNumber(tAirshuttleOrder);
+		
+		
+		 
 		return orderProcessDAO.insertAfterailpayFeedBack(tAirshuttleOrder);
 		
 	}
@@ -81,9 +87,9 @@ public class OrderService {
 
 
 
-	public Page<TAirshuttleOrder> updateOrder(TAirshuttleOrder tAirshuttleOrder) {
-		orderProcessDAO.updateOrderProcess(tAirshuttleOrder);
-		return orderDAO.updateOrder(tAirshuttleOrder);
+	public Integer updateOrder(TAirshuttleOrder tAirshuttleOrder) {
+		return	orderProcessDAO.insert(tAirshuttleOrder);
+		
 	}
 
 

@@ -43,7 +43,7 @@ public class OrderController extends BaseController {
 	
 
 	@Get("/findorder")
-	public String findOrder(Invocation inv,TAirshuttleOrder tAirshuttleOrder,@Param("pageSize")  Integer pageSize,@Param("pageNumber")  Integer pageNumber
+	public String findOrder(Invocation inv,Model model,TAirshuttleOrder tAirshuttleOrder,@Param("pageSize")  Integer pageSize,@Param("pageNumber")  Integer pageNumber
 			) throws Exception{
 		//int pageNumber=Integer.parseInt(inv.getRequest().getParameter("pageNumber"));
 		//int pageSize=Integer.parseInt(inv.getRequest().getParameter("pageSize"));
@@ -59,12 +59,32 @@ public class OrderController extends BaseController {
 		Page<TAirshuttleOrder> page = orderService.getByUserId(tAirshuttleOrder, pageNumber, pageSize);
 
 
-		inv.getRequest().setAttribute("rows", page.getItems() == null ? "" : page.getItems());
-		inv.getRequest().setAttribute("total", page.getTotalCount());	
-		inv.getRequest().getRequestDispatcher("/views/order/orderinfo.jsp").forward(inv.getRequest(),inv.getResponse());
-		return "";
+		 model.add("rows", page.getItems() == null ? "" : page.getItems());
+		 model.add("total", page.getTotalCount());
+	
+		return "order/orderinfo";
 	}
 	
+	@Get("/preupdateorder")
+	public String preupdateOrder(Invocation inv,Model model,TAirshuttleOrder tAirshuttleOrder
+		) throws Exception{
+		if(pageSize==null)
+			pageSize=super.pageSize;
+		if(pageNumber==null)
+			pageNumber=super.pageNumber;
+		HttpSession session = inv.getRequest().getSession();
+
+		SimpleDateFormat  sp=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		//sp.parse(expirationDate);
+		Date curDate = new Date();
+
+	//	tAirshuttleOrder.setCreateTime(curDate);
+	
+		 model.add("item", tAirshuttleOrder);
+		
+		 return "alipay/updateorder";
+	}
 	
 	@Get("/updateorder")
 	public String updateOrder(Invocation inv,Model model,TAirshuttleOrder tAirshuttleOrder,
@@ -76,25 +96,23 @@ public class OrderController extends BaseController {
 			pageSize=super.pageSize;
 		if(pageNumber==null)
 			pageNumber=super.pageNumber;
-			
 		HttpSession session = inv.getRequest().getSession();
-		
 
+		SimpleDateFormat  sp=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		//SimpleDateFormat sp=new SimpleDateFormat("yyyy-MM-dd");
 		//sp.parse(expirationDate);
 		Date curDate = new Date();
 
-		// sp=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		tAirshuttleOrder.setCreateTime(curDate);
+		tAirshuttleOrder.setDesignationNumber("Order_"+Long.toString(System.currentTimeMillis()));
+		
+		Integer id = orderService.updateOrder(tAirshuttleOrder);
+		
 
-//			
-		tAirshuttleOrder.setModifyTime(curDate);
-		orderService.updateOrder(tAirshuttleOrder);
-		 Page<TAirshuttleOrder> page= orderService.updateOrder(tAirshuttleOrder);
-		 model.add("rows", page.getItems() == null ? "" : page.getItems());
-		 model.add("total", page.getTotalCount());
-	
-		return "order/orderinfo";
+		
+		 model.add("designationNumber", tAirshuttleOrder.getDesignationNumber());
+		 model.add("bookPrice", tAirshuttleOrder.getBookPrice());
+		 return "alipay/alipay";
 	}
 	@Post("/notify_url")
 	public void alipaynotify_url(Invocation inv) throws Exception{
@@ -153,6 +171,7 @@ public class OrderController extends BaseController {
 			
 			//review_process
 			if(trade_status.equals("WAIT_BUYER_PAY")){
+				
 				//该判断表示买家已在支付宝交易管理中产生了交易记录，但没有付款
 				
 					//判断该笔订单是否在商户网站中已经做过处理
@@ -351,7 +370,7 @@ public class OrderController extends BaseController {
 				e.printStackTrace();
 			}
 			params.put(name, valueStr);
-			System.out.println(name+":"+valueStr);
+			System.out.println("test reuturn:"+name+":"+valueStr);
 		}
 		
 		//获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
@@ -398,18 +417,19 @@ public class OrderController extends BaseController {
 				//判断该笔订单是否在商户网站中已经做过处理
 					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
 					//如果有做过处理，不执行商户的业务程序
-			}
-			
-			//该页面可做页面美工编辑
-			try {
-				
-			
 				TAirshuttleOrder tAirshuttleOrder=orderService.getOrderByDesignNumber(out_trade_no);
 				Date curDate = new Date();
 
 				tAirshuttleOrder.setModifyTime(curDate);
 				tAirshuttleOrder.setDesignationNumber(trade_no);
 				Integer id = orderService.alipayfeedback(tAirshuttleOrder);
+			}
+			
+			//该页面可做页面美工编辑
+			try {
+				
+			
+				
 				inv.getResponse().getWriter().println("验证成功<br />");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
